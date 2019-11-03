@@ -13,6 +13,4 @@ public class AddWaranteeForm extends AppCompatActivity {
 
     }
 
-
-
 }
