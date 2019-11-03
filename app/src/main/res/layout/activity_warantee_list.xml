@@ -24,9 +24,9 @@
         android:background="@android:drawable/ic_menu_add"
         android:backgroundTint="#00EC18"
         android:shadowColor="#00FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/warantees"
-        app:layout_constraintStart_toStartOf="@id/warantees"
-        app:layout_constraintTop_toBottomOf="@id/warantees" />
+        app:layout_constraintStart_toStartOf="@id/warantees" />
 
     <LinearLayout
         android:id="@+id/searchbar"
