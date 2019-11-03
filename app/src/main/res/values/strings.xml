@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Warantee</string>
+    <string name="title_activity_add_warantee_form">AddWaranteeForm</string>
 </resources>
