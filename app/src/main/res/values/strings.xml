@@ -3,4 +3,9 @@
     <string name="title_activity_add_warantee_form">AddWaranteeForm</string>
 
     <string name="email">Email</string>
+    <string name="forgotPass">Forgot Password?</string>
+
+    <string name="facebook_app_id">518115285435697</string>
+    <string name="fb_login_protocol_scheme">fb518115285435697</string>
+
 </resources>
