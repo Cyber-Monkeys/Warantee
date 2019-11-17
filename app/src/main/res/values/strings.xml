@@ -2,5 +2,13 @@
     <string name="app_name">Warantee</string>
     <string name="title_activity_add_warantee_form">AddWaranteeForm</string>
 
-    <string name="email">Email</string>
+
+    <string name="sellerName">Seller Name</string>
+    <string name="sellerPhone">Seller Phone</string>
+    <string name="sellerEmail">Email</string>
+    <string name="userName">Name</string>
+    <string name="date">Date</string>
+    <string name="category">Category</string>
+    <string name="forgotPass"></string>
+
 </resources>
