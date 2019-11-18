@@ -2,6 +2,7 @@ package com.example.warantee;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -98,6 +99,7 @@ public class AddWaranteeForm extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Log.d("res1", data.getData().toString());
             Bundle extras = data.getExtras();
             Bitmap Photo = (Bitmap) extras.get("data");
             warrantyImage.setImageBitmap(Photo);

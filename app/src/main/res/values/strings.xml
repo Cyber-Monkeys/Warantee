@@ -10,5 +10,6 @@
     <string name="date">Date</string>
     <string name="category">Category</string>
     <string name="forgotPass"></string>
+    <string name="email">Email</string>
 
 </resources>
