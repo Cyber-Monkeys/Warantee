@@ -25,6 +25,10 @@ import java.util.Locale;
 
 public class AddWaranteeForm extends AppCompatActivity {
 
+    //Next Button
+    private Button next;
+
+
     //Variables for capturing and Viewing the Image
     static final int REQUEST_IMAGE_CAPTURE = 1;
     ImageView warrantyImage;
@@ -40,9 +44,19 @@ public class AddWaranteeForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_add_warantee_form);
 
+        //Next Page Button
+        next = (Button)  findViewById(R.id.nextPageButton) ;
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAddWaranteeForm2();
+            }
+        });
+
         //Date Thingy xd
         myDate = (EditText) findViewById(R.id.editText3);
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -56,13 +70,6 @@ public class AddWaranteeForm extends AppCompatActivity {
         };
 
 
-        //Button and  ImageView for the Camera
-        Button captureImage = (Button) findViewById(R.id.captureImage);
-        warrantyImage = (ImageView) findViewById(R.id.warrantyImage);
-
-        //Check if the phone has a camera
-        if (!hasCamera())
-            captureImage.setEnabled(false);
 
 
 
@@ -78,34 +85,13 @@ public class AddWaranteeForm extends AppCompatActivity {
 
     }
 
-
-    //----------------------------- Camera Functions -----------------------------
-    //has a camera function
-    private boolean hasCamera() {
-        return getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY); // to check if the phone has a camera,
-        // if not it will disable the button
+    //----------------------------- OpenAddWarantee Function -----------------------
+    public void openAddWaranteeForm2(){
+        Intent intent = new Intent(this, AddWaranteeForm2.class);
+        startActivity(intent);
     }
+    //----------------------------- End of OpenAddWarantee -------------------------
 
-    //Launching the Camera
-    public void launchCamera(View view) {
-        //This intent is to to lunch the camera when this function is called
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        //after taking the image we want to save so we start an activity to save the image
-        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-    }
-
-    //Receiving the Image and displaying it in ImageView
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Log.d("res1", data.getData().toString());
-            Bundle extras = data.getExtras();
-            Bitmap Photo = (Bitmap) extras.get("data");
-            warrantyImage.setImageBitmap(Photo);
-        }
-    }
-    //----------------------------- End Of Camera -----------------------------
 
     //----------------------------- DatePicker Function -----------------------
     private void updateDate() {
