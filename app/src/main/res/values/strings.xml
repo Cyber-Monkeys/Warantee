@@ -2,10 +2,25 @@
     <string name="app_name">Warantee</string>
     <string name="title_activity_add_warantee_form">AddWaranteeForm</string>
 
-    <string name="email">Email</string>
-    <string name="forgotPass">Forgot Password?</string>
 
-    <string name="facebook_app_id">518115285435697</string>
-    <string name="fb_login_protocol_scheme">fb518115285435697</string>
+    <string name="sellerName">Seller Name</string>
+    <string name="sellerPhone">Seller Phone</string>
+    <string name="sellerEmail">Email</string>
+    <string name="userName">Name</string>
+    <string name="date">Date</string>
+    <string name="category">Category</string>
+    <string name="forgotPass"></string>
+    <string name="email">Email</string>
+    <string name="playVideo">Video</string>
+    <string name="captureImage">Images</string>
+    <string name="Submit">Submit</string>
+    <string name="fname">First Name</string>
+    <string name="lname">Last Name</string>
+    <string name="period">Period</string>
+    <string name="WarrantyPeriod">Warranty Period</string>
+
+    //Side informaiton
+    <string name="Phone">Phone</string>
+
 
 </resources>
