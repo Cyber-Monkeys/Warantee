@@ -11,5 +11,16 @@
     <string name="category">Category</string>
     <string name="forgotPass"></string>
     <string name="email">Email</string>
+    <string name="playVideo">Video</string>
+    <string name="captureImage">Images</string>
+    <string name="Submit">Submit</string>
+    <string name="fname">First Name</string>
+    <string name="lname">Last Name</string>
+    <string name="period">Period</string>
+    <string name="WarrantyPeriod">Warranty Period</string>
+
+    //Side informaiton
+    <string name="Phone">Phone</string>
+
 
 </resources>

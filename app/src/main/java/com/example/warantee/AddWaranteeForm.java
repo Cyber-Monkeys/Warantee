@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -33,9 +34,11 @@ public class AddWaranteeForm extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     ImageView warrantyImage;
 
+
     //Variables for Picking the date
     EditText myDate;
     final Calendar myCalendar = Calendar.getInstance();
+    DatePickerDialog dpd ;
 
 
     @Override
@@ -53,21 +56,42 @@ public class AddWaranteeForm extends AppCompatActivity {
             }
         });
 
-        //Date Thingy xd
+
+
+        //Date Picker Code
         myDate = (EditText) findViewById(R.id.editText3);
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-
+        myDate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateDate();
+            public void onClick(View v) {
+
+                int day = myCalendar.get(Calendar.DAY_OF_MONTH);
+                int month = myCalendar.get(Calendar.MONTH);
+                int year = myCalendar.get(Calendar.YEAR);
+
+                dpd = new DatePickerDialog(AddWaranteeForm.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                        myDate.setText(dayOfMonth + "/" + (month+1) + "/" + year);
+                    }
+                }, day, month, year);
+                    dpd.show();
             }
-        };
+        });
+
+
+//        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+//
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear,
+//                                  int dayOfMonth) {
+//
+//                myCalendar.set(Calendar.YEAR, year);
+//                myCalendar.set(Calendar.MONTH, monthOfYear);
+//                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                updateDate();
+//            }
+//        };
 
 
 
@@ -94,11 +118,11 @@ public class AddWaranteeForm extends AppCompatActivity {
 
 
     //----------------------------- DatePicker Function -----------------------
-    private void updateDate() {
-        String myFormat = "DD/mm/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
-
-        myDate.setText(sdf.format(myCalendar.getTime()));
-    }
+//    private void updateDate() {
+//        String myFormat = "DD/mm/yy"; //In which you need put here
+//        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
+//
+//        myDate.setText(sdf.format(myCalendar.getTime()));
+//    }
     //----------------------------- End Of DatePicker --------------------------
 }
