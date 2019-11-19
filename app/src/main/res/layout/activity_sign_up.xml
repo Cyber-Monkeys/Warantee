@@ -26,9 +26,11 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
+        android:layout_marginEnd="55dp"
         android:ems="10"
         android:hint="Please enter email"
         android:inputType="textNoSuggestions"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -68,9 +70,11 @@
         android:id="@+id/confirmPassword"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="55dp"
         android:ems="10"
         android:hint="Please confirm password"
         android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/forgotPassword"
         app:layout_constraintTop_toBottomOf="@+id/forgotPassword" />
 
