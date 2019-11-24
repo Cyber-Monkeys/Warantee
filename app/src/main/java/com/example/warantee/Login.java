@@ -106,7 +106,7 @@ public class Login extends AppCompatActivity {
                 FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
                 if(mFirebaseUser != null){
                     Toast.makeText(Login.this, "Logged In", Toast.LENGTH_SHORT);
-                    Intent i = new Intent(Login.this, MainActivity.class);
+                    Intent i = new Intent(Login.this, waranteeList.class);
                     startActivity(i);
                 }else{
                     Toast.makeText(Login.this, "Please log in", Toast.LENGTH_SHORT);
@@ -313,7 +313,7 @@ public class Login extends AppCompatActivity {
                 if(task.isSuccessful()){
                     FirebaseUser myuserobj = mFirebaseAuth.getCurrentUser();
                     //updateUI(myuserobj);
-                    startActivity(new Intent(Login.this, MainActivity.class));
+                    startActivity(new Intent(Login.this, waranteeList.class));
                 }else{
                     Toast.makeText(getApplicationContext(), "Could not register to firebase", Toast.LENGTH_SHORT).show();
                 }

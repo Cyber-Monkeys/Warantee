@@ -31,7 +31,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:clickable="true"
-        android:onClick="CheckIfAuthenticated"
+        android:onClick="addWarantyPressed"
         app:chipBackgroundColor="#069E15"
         app:chipCornerRadius="50dp"
         app:chipIcon="@drawable/ic_add_24px"
@@ -54,7 +54,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/warantyPhone"
             android:layout_width="368dp"
             android:layout_height="match_parent"
             android:layout_weight="14"

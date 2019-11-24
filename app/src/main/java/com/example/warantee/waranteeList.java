@@ -583,5 +583,7 @@ public class waranteeList extends AppCompatActivity {
             stupidImageView.setImageBitmap(bm);
         }
     }
-
+    public void addWarantyPressed(View V) {
+        startActivity(new Intent(waranteeList.this, AddWaranteeForm.class));
+    }
 }

@@ -18,10 +18,24 @@ public class AddWaranteeForm2 extends AppCompatActivity {
 
     ImageView warrantyImage;
     Button submit;
-
+    private String name;
+    private String phone;
+    private String email;
+    private String date;
+    private String WarantyPeriod;
+    private int category;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        name = intent.getStringExtra("name");
+        phone = intent.getStringExtra("phone");
+        email = intent.getStringExtra("email");
+        date = intent.getStringExtra("date");
+        WarantyPeriod = intent.getStringExtra("period");
+        category = intent.getIntExtra("category", 0);
+
+        intent.putExtra("category", category);
         setContentView(R.layout.content_add_warentee_form_2);
 
         //Button and  ImageView for the Camera
