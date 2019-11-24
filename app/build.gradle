@@ -1,10 +1,10 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.application';
 
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.warantee"
-        minSdkVersion 23
+        minSdkVersion 22
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -35,7 +35,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
     implementation 'com.google.firebase:firebase-auth:19.1.0'//facebook api
-    def security_version = "1.0.0-alpha02"
-    implementation "androidx.security:security-crypto:$security_version"
 }
 apply plugin: 'com.google.gms.google-services'
