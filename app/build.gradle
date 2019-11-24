@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.warantee"
-        minSdkVersion 22
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -31,10 +31,11 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation 'com.google.android.material:material:1.0.0'
-
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
     implementation 'com.google.firebase:firebase-auth:19.1.0'//facebook api
+    def security_version = "1.0.0-alpha02"
+    implementation "androidx.security:security-crypto:$security_version"
 }
 apply plugin: 'com.google.gms.google-services'
