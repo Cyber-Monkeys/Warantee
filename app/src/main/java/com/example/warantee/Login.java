@@ -139,7 +139,7 @@ public class Login extends AppCompatActivity {
                                 Toast.makeText(Login.this, "Please log in again", Toast.LENGTH_SHORT);
                             }else{
                                 progressDialog.dismiss();
-                                Intent i = new Intent(Login.this, MainActivity.class);
+                                Intent i = new Intent(Login.this, waranteeList.class);
                                 startActivity(i);
                             }
                         }
