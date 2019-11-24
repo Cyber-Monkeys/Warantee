@@ -84,7 +84,7 @@ public class Login extends AppCompatActivity {
                 FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
                 if(mFirebaseUser != null){
                     Toast.makeText(Login.this, "Logged In", Toast.LENGTH_SHORT);
-                    Intent i = new Intent(Login.this, MainActivity.class);
+                    Intent i = new Intent(Login.this, waranteeList.class);
                     startActivity(i);
                 }else{
                     Toast.makeText(Login.this, "Please log in", Toast.LENGTH_SHORT);
@@ -113,7 +113,8 @@ public class Login extends AppCompatActivity {
                             if(!task.isSuccessful()){
                                 Toast.makeText(Login.this, "Please log in again", Toast.LENGTH_SHORT);
                             }else{
-                                Intent i = new Intent(Login.this, MainActivity.class);
+                                Log.d("us2", "login successful");
+                                Intent i = new Intent(Login.this, waranteeList.class);
                                 startActivity(i);
                             }
                         }
@@ -162,7 +163,7 @@ public class Login extends AppCompatActivity {
         if(account == null){
             Toast.makeText(this, "no one logged in google", Toast.LENGTH_SHORT).show();
         }else{
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, waranteeList.class));
         }
 
     }
@@ -189,7 +190,7 @@ public class Login extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
+            Log.d("us1", "google login successful");
             // Signed in successfully, show authenticated UI.
             //updateUI(account);
         } catch (ApiException e) {
@@ -208,7 +209,8 @@ public class Login extends AppCompatActivity {
                 if(task.isSuccessful()){
                     FirebaseUser myuserobj = mFirebaseAuth.getCurrentUser();
                     //updateUI(myuserobj);
-                    startActivity(new Intent(Login.this, MainActivity.class));
+
+                    startActivity(new Intent(Login.this, waranteeList.class));
                 }else{
                     Toast.makeText(getApplicationContext(), "Could not register to firebase", Toast.LENGTH_SHORT).show();
                 }
