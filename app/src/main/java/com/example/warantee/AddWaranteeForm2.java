@@ -16,6 +16,11 @@ import static com.example.warantee.AddWaranteeForm.REQUEST_IMAGE_CAPTURE;
 
 public class AddWaranteeForm2 extends AppCompatActivity {
 
+
+    //Back Button
+    private Button back;
+
+
     ImageView warrantyImage;
     Button submit;
 
@@ -31,6 +36,16 @@ public class AddWaranteeForm2 extends AppCompatActivity {
         //Check if the phone has a camera
         if (!hasCamera())
             captureImage.setEnabled(false);
+
+
+        //Next Page Button
+        back = (Button)  findViewById(R.id.BackButton) ;
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAddWaranteeForm();
+            }
+        });
 
         //Create submission button
         submit = (Button) findViewById(R.id.FormSubmitButton);
@@ -64,4 +79,11 @@ public class AddWaranteeForm2 extends AppCompatActivity {
         }
     }
     //----------------------------- End Of Camera -----------------------------
+
+    //----------------------------- OpenAddWarantee Function -----------------------
+    public void openAddWaranteeForm(){
+        Intent intent = new Intent(this, AddWaranteeForm.class);
+        startActivity(intent);
+    }
+    //----------------------------- End of OpenAddWarantee -------------------------
 }
