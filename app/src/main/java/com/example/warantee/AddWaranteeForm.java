@@ -1,8 +1,11 @@
 package com.example.warantee;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -13,7 +16,9 @@ import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.content.pm.PackageInfo;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +33,12 @@ public class AddWaranteeForm extends AppCompatActivity {
 
     //Next Button
     private Button next;
-
+    private String name;
+    private String phone;
+    private String email;
+    private String date;
+    private String WarantyPeriod;
+    private int category;
 
     //Variables for capturing and Viewing the Image
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -37,16 +47,53 @@ public class AddWaranteeForm extends AppCompatActivity {
 
     //Variables for Picking the date
     EditText myDate;
+    EditText nameEditText;
+    EditText phoneEditText;
+    EditText emailEditText;
+    EditText warantyPeriodEditText;
     final Calendar myCalendar = Calendar.getInstance();
     DatePickerDialog dpd ;
+    private boolean isUserInteracting = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_add_warantee_form);
+        Spinner dropdown = findViewById(R.id.spinner3);
+        Context context = this.getApplicationContext();
+//set the spinners adapter to the previously created one.
+        nameEditText = (EditText) findViewById(R.id.warantyName);
+        phoneEditText = (EditText) findViewById(R.id.warantyPhone);
+        emailEditText = (EditText) findViewById(R.id.warantyEmail);
+        warantyPeriodEditText = (EditText) findViewById(R.id.warantyPeriod);
 
+        String[] spinnerTitles;
+        String[] spinnerPopulation;
+        int[] spinnerImages;
+
+        spinnerTitles = new String[]{"Food", "Grocery", "Travel", "Electronics", "Others"};
+        spinnerImages = new int[]{R.drawable.ic_local_dining_24px
+                , R.drawable.ic_local_grocery_store_24px
+                , R.drawable.ic_directions_car_24px
+                , R.drawable.ic_devices_other_24px
+                , R.drawable.ic_emoji_objects_24px};
+        CustomFormAdapter mCustomAdapter = new CustomFormAdapter(this, spinnerTitles, spinnerImages);
+        dropdown.setAdapter(mCustomAdapter);
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView adapterView, View view, int i, long l) {
+                if (isUserInteracting) {
+                    Toast.makeText(context, spinnerTitles[i], Toast.LENGTH_SHORT).show();
+                    category = i;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView adapterView) {
+
+            }
+        });
         //Next Page Button
         next = (Button)  findViewById(R.id.nextPageButton) ;
         next.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +120,7 @@ public class AddWaranteeForm extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
                         myDate.setText(dayOfMonth + "/" + (month+1) + "/" + year);
+                        date = dayOfMonth + "/" + (month+1) + "/" + year;
                     }
                 }, day, month, year);
                     dpd.show();
@@ -105,9 +153,20 @@ public class AddWaranteeForm extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        isUserInteracting = true;
+    }
     //----------------------------- OpenAddWarantee Function -----------------------
     public void openAddWaranteeForm2(){
         Intent intent = new Intent(this, AddWaranteeForm2.class);
+        intent.putExtra("name", nameEditText.getText());
+        intent.putExtra("phone", phoneEditText.getText());
+        intent.putExtra("email", emailEditText.getText());
+        intent.putExtra("date", date);
+        intent.putExtra("period", warantyPeriodEditText.getText());
+        intent.putExtra("category", category);
         startActivity(intent);
     }
     //----------------------------- End of OpenAddWarantee -------------------------
