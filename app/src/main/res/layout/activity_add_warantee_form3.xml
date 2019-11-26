@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!--    <Button-->
+    <!--        android:id="@+id/nextPageButton2"-->
+    <!--        style="@style/Widget.AppCompat.Button.Borderless.Colored"-->
+    <!--        android:layout_width="130dp"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_marginStart="246dp"-->
+    <!--        android:layout_marginEnd="35dp"-->
+    <!--        android:layout_marginBottom="64dp"-->
+    <!--        android:background="@color/browser_actions_text_color"-->
+    <!--        android:text="Next"-->
+    <!--        android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
+    <!--        android:textColor="#FFFFFF"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        android:layout_marginLeft="246dp"-->
+    <!--        android:layout_marginRight="35dp" />-->
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <fragment
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:id="@+id/AutoCompleteMap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <fragment
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
