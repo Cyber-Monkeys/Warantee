@@ -95,7 +95,6 @@ public class waranteeList extends AppCompatActivity {
         context = this.getApplicationContext();
         setContentView(R.layout.activity_warantee_list);
         listView = (ListView) findViewById(R.id.warantees);
-        tvEmptyView = (TextView) findViewById(R.id.empty_view);
         warantyList = new ArrayList<Waranty>();
 
         handler = new Handler(){
@@ -198,12 +197,12 @@ public class waranteeList extends AppCompatActivity {
             super.onPostExecute(v);
             Log.d("res1", "start PostExecute" + warantyList.size());
             for(int i = 0;i < lengthOfWarantees;i++) {
-                Thread obj = new Thread(new GetWaranteeImageTask("http://172.28.24.229:3000/s3proxy?fileKey=" + warantyList.get(i).getUid() + warantyList.get(i).getId() + ".jpg", i, warantyList.get(i).getId(), getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath(), this.idtoken, handler ));
+                Thread obj = new Thread(new GetWaranteeImageTask("http://159.65.140.187:3000/s3proxy?fileKey=" + warantyList.get(i).getUid() + warantyList.get(i).getId() + ".jpg", i, warantyList.get(i).getId(), getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath(), this.idtoken, handler ));
                 obj.start();
             }
         }
         private String downloadFile(String token) throws IOException, GeneralSecurityException {
-            String myurl = "http://172.28.24.229:3000/waranty";
+            String myurl = "http://159.65.140.187:3000/waranty";
             InputStream is = null;
             OutputStream outStream = null;
             File targetFile = null;

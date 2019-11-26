@@ -153,7 +153,7 @@ public class AddWaranteeForm2 extends AppCompatActivity {
         }
     }
     public void submitWaranty(View V) {
-        String stringUrl = "http://172.28.24.229:3000/waranty";
+        String stringUrl = "http://159.65.140.187:3000/waranty";
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         mUser.getIdToken(true)
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
