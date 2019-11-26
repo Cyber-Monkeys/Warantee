@@ -55,7 +55,7 @@ public class GetWaranteeVideoTask implements Runnable {
             is = conn.getInputStream();
             targetFile = new File(this.directory + warantyId + ".mp4");
             outStream = new FileOutputStream(targetFile);
-            byte[] buffer = new byte[8 * 100 * 1024];
+            byte[] buffer = new byte[8 * 200 * 1024];
             int bytesRead;
             while ((bytesRead = is.read(buffer)) != -1) {
                 outStream.write(buffer, 0, bytesRead);
