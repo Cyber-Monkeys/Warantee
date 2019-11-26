@@ -48,6 +48,7 @@ public class AddWaranteeForm2 extends AppCompatActivity {
     private String date;
     private String WarantyPeriod;
     private int category;
+    private String amount;
     private String currentPhotoPath, currentVideoPath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class AddWaranteeForm2 extends AppCompatActivity {
         date = intent.getStringExtra("date");
         WarantyPeriod = intent.getStringExtra("period");
         category = intent.getIntExtra("category", 0);
+        amount = intent.getStringExtra("amount");
 
         intent.putExtra("category", category);
         setContentView(R.layout.content_add_warentee_form_2);
@@ -142,11 +144,36 @@ public class AddWaranteeForm2 extends AppCompatActivity {
                 Uri photoURI = FileProvider.getUriForFile(this,
                         "com.example.android.fileprovider",
                         videoFile);
-                currentPhotoPath = videoFile.getAbsolutePath();
+                currentVideoPath = videoFile.getAbsolutePath();
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_VIDEO);
             }
         }
+    }
+    public void submitWaranty(View V) {
+        String stringUrl = "http://172.28.24.229:3000/waranty";
+        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser.getIdToken(true)
+                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                        if (task.isSuccessful()) {
+                            String idToken = task.getResult().getToken();
+                            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                            if (networkInfo != null && networkInfo.isConnected()) {
+                                Log.d("res3", "start upload");
+                                new InsertWarantyTask().execute(stringUrl, idToken, date, amount + "", category + "", WarantyPeriod + "", name, phone, email, currentPhotoPath, currentVideoPath);
+
+                            } else {
+                                Log.d("result2", "error");
+                            }
+                            // ...
+                        } else {
+                            // Handle error -> task.getException();
+                            Log.d("res3", "no token verified");
+                        }
+                    }
+                });
     }
     private File createFile(String fileType, String ext) throws IOException {
         // Create an Video file name
