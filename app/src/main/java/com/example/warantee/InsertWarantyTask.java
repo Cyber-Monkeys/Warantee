@@ -1,5 +1,6 @@
 package com.example.warantee;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -15,12 +16,18 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import javax.net.ssl.HttpsURLConnection;
+
 public class InsertWarantyTask extends AsyncTask<String, Void, String> {
 
     public String currentPhotoPath;
     public String currentVideoPath;
     public static String idToken;
 
+    Context context;
+    InsertWarantyTask(Context context) {
+        this.context = context.getApplicationContext();
+    }
     @Override
     protected String doInBackground(String... params) {
         try {
@@ -36,11 +43,12 @@ public class InsertWarantyTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        new UploadPhotoTask().execute(InsertWarantyTask.idToken,result, this.currentPhotoPath, this.currentVideoPath);
+        new UploadPhotoTask(context).execute(InsertWarantyTask.idToken,result, this.currentPhotoPath, this.currentVideoPath);
     }
 
     private String downloadUrl(String myurl, String idToken, String date, String amount, String category, String warantyPeriod, String sellerName, String sellerPhone, String sellerEmail ) throws IOException {
         InputStream is = null;
+        Log.d("res1", amount);
         float parseAmount = Float.parseFloat(amount);
         int parseWarantyPeriod = Integer.parseInt(warantyPeriod);
         int parseCategory = Integer.parseInt(category);
@@ -52,7 +60,7 @@ public class InsertWarantyTask extends AsyncTask<String, Void, String> {
         String result = "";
         try {
             URL url = new URL(myurl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
             conn.setRequestProperty("Accept", "application/json");
@@ -89,12 +97,13 @@ public class InsertWarantyTask extends AsyncTask<String, Void, String> {
         } catch(Exception e) {
             Log.d("error", e.getMessage());
         }finally {
-            os.flush();
+
 
             if (is != null) {
                 is.close();
             }
             if(os != null) {
+                os.flush();
                 os.close();
             }
             return result;

@@ -13,6 +13,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import javax.net.ssl.HttpsURLConnection;
+
 public class GetWaranteeImageTask implements Runnable {
     String url;
     String warantyId;
@@ -42,7 +44,7 @@ public class GetWaranteeImageTask implements Runnable {
         Log.d("result1startdownload", this.url);
         try {
             URL url = new URL(this.url);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             Log.d("res1", this.token);
             conn.setRequestProperty("AuthToken", this.token);
