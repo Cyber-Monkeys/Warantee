@@ -37,8 +37,9 @@ public class AddWaranteeForm extends AppCompatActivity {
     private String phone;
     private String email;
     private String date;
-    private String WarantyPeriod;
+    private int WarantyPeriod;
     private int category;
+    private String amount;
 
     //Variables for capturing and Viewing the Image
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -51,7 +52,8 @@ public class AddWaranteeForm extends AppCompatActivity {
     EditText phoneEditText;
     EditText emailEditText;
     EditText warantyPeriodEditText;
-    final Calendar myCalendar = Calendar.getInstance();
+    EditText amountEditText;
+    Calendar myCalendar = Calendar.getInstance();
     DatePickerDialog dpd ;
     private boolean isUserInteracting = false;
 
@@ -67,9 +69,9 @@ public class AddWaranteeForm extends AppCompatActivity {
         phoneEditText = (EditText) findViewById(R.id.warantyPhone);
         emailEditText = (EditText) findViewById(R.id.warantyEmail);
         warantyPeriodEditText = (EditText) findViewById(R.id.warantyPeriod);
-
+        amountEditText = (EditText) findViewById(R.id.warantyAmount);
+        myCalendar = Calendar.getInstance();
         String[] spinnerTitles;
-        String[] spinnerPopulation;
         int[] spinnerImages;
 
         spinnerTitles = new String[]{"Food", "Grocery", "Travel", "Electronics", "Others"};
@@ -165,12 +167,13 @@ public class AddWaranteeForm extends AppCompatActivity {
     //----------------------------- OpenAddWarantee Function -----------------------
     public void openAddWaranteeForm2(){
         Intent intent = new Intent(this, AddWaranteeForm2.class);
-        intent.putExtra("name", nameEditText.getText());
-        intent.putExtra("phone", phoneEditText.getText());
-        intent.putExtra("email", emailEditText.getText());
+        intent.putExtra("name", nameEditText.getText() + "");
+        intent.putExtra("phone", phoneEditText.getText() + "");
+        intent.putExtra("email", emailEditText.getText() + "");
         intent.putExtra("date", date);
-        intent.putExtra("period", warantyPeriodEditText.getText());
+        intent.putExtra("period", warantyPeriodEditText.getText() + "");
         intent.putExtra("category", category);
+        intent.putExtra("amount", amountEditText.getText() + "");
         startActivity(intent);
     }
     //----------------------------- End of OpenAddWarantee -------------------------
