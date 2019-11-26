@@ -1,5 +1,7 @@
 package com.example.warantee;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -10,24 +12,40 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+
+import javax.net.ssl.HttpsURLConnection;
+
 public class UploadVideoTask extends AsyncTask<String, Void, Void> {
+
+    Context context;
+    UploadVideoTask(Context context) {
+        this.context = context.getApplicationContext();
+    }
+
     @Override
     protected Void doInBackground(String... urls) {
         uploadVideo(urls[0], urls[1], urls[2]);
         return null;
     }
+    @Override
+    protected void onPostExecute(Void V) {
+        super.onPostExecute(V);
+        Intent intent = new Intent(context, waranteeList.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
 
     public void uploadVideo(String idToken, String warantyId, String filePath) {
-        String urlName = "http://172.28.24.229:3000/video";
+        String urlName = "https://www.vrpacman.com/video";
         String fileName = filePath;
-        HttpURLConnection conn = null;
+        HttpsURLConnection conn = null;
         DataOutputStream dos = null;
         String lineEnd = "\r\n";
         String twoHyphens = "--";
         String boundary = "*****";
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
-        int maxBufferSize = 1 * 1024 * 1024;
+        int maxBufferSize = 1 * 10 * 1024;
 
         File sourceFile = new File(filePath);
         if (!sourceFile.isFile()) {
@@ -39,7 +57,7 @@ public class UploadVideoTask extends AsyncTask<String, Void, Void> {
             Log.d("res3", "start sending");
             FileInputStream fileInputStream = new FileInputStream(sourceFile);
             URL url = new URL(urlName);
-            conn = (HttpURLConnection) url.openConnection();
+            conn = (HttpsURLConnection) url.openConnection();
             conn.setDoInput(true);
             conn.setDoOutput(true);
             conn.setUseCaches(false);

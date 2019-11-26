@@ -4,13 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     tools:context=".waranteeList">
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="LogOutButtonPressed"
+        android:text="Log Out"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/searchbar"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="15"
+        app:layout_constraintBottom_toTopOf="@+id/warantees"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@android:drawable/ic_menu_search"
+            android:backgroundTint="#696969" />
+
+        <EditText
+            android:id="@+id/warantyPhone"
+            android:layout_width="368dp"
+            android:layout_height="match_parent"
+            android:layout_weight="14"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="89dp"
+            android:layout_height="match_parent"
+            android:layout_weight="14" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/warantees"
-        android:layout_width="wrap_content"
-        android:layout_height="500dp"
+        android:layout_width="337dp"
+        android:layout_height="510dp"
         android:layout_marginTop="120dp"
+        android:paddingTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -35,58 +79,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/warantees"
         app:layout_constraintStart_toStartOf="@+id/warantees" />
-
-    <LinearLayout
-        android:id="@+id/searchbar"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:weightSum="15"
-        app:layout_constraintBottom_toTopOf="@+id/warantees"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <EditText
-            android:id="@+id/warantyPhone"
-            android:layout_width="368dp"
-            android:layout_height="match_parent"
-            android:layout_weight="14"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
-
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@android:drawable/ic_menu_search"
-            android:backgroundTint="#696969" />
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="89dp"
-            android:layout_height="match_parent"
-            android:layout_weight="14" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/empty_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:text="No Records"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/warantees" />
-
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="LogOutButtonPressed"
-        android:text="Log Out"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
