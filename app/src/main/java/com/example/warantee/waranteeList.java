@@ -161,6 +161,10 @@ public class waranteeList extends AppCompatActivity {
                     }
                 });
     }
+    protected void onStart(){
+        super.onStart();
+        mFirebaseAuth.addAuthStateListener(mAuthListener);
+    }
 
     public void LogOutButtonPressed(View V) {
         mFirebaseAuth.signOut();
