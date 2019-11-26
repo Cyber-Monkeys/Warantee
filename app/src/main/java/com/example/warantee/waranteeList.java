@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -63,6 +65,7 @@ import com.google.firebase.auth.GetTokenResult;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -91,6 +94,7 @@ public class waranteeList extends AppCompatActivity {
     private int lengthOfWarantees = 0;
 
     protected Handler handler;
+    SQLiteDatabase mydatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +102,23 @@ public class waranteeList extends AppCompatActivity {
         setContentView(R.layout.activity_warantee_list);
         listView = (ListView) findViewById(R.id.warantees);
         warantyList = new ArrayList<Waranty>();
+        mydatabase = openOrCreateDatabase("WaranteeDatabase",MODE_PRIVATE,null);
 
+        mydatabase.beginTransaction();
+        try {
+            //perform your database operations here ...
+            // delete any existing table
+            // create a new table for restaurants
+            mydatabase.execSQL("CREATE TABLE IF NOT EXISTS Waranty(id INTEGER PRIMARY KEY,uid VARCHAR, date VARCHAR, amount FLOAT, category INTEGER, warantyPeriod INTEGER, sellerName VARCHAR, sellerPhone VARCHAR, sellerEmail VARCHAR );");
+            mydatabase.setTransactionSuccessful(); //commit your changes
+        }
+        catch (Exception e) {
+            //report problem
+            Log.d("res1", "error in creating table");
+        }
+        finally {
+            mydatabase.endTransaction();
+        }
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -112,6 +132,17 @@ public class waranteeList extends AppCompatActivity {
                 //update local database here?
             }
         };
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                Intent i = new Intent(parent.getContext(),WarrantyInfo.class);
+                i.putExtra("id", warantyList.get(position).getId());
+                startActivity(i);
+            }
+
+        });
                 mFirebaseAuth = FirebaseAuth.getInstance();
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -172,6 +203,21 @@ public class waranteeList extends AppCompatActivity {
         mGoogleSignInClient.signOut();
         LoginManager.getInstance().logOut();
         AccessToken.setCurrentAccessToken(null);
+        mydatabase.beginTransaction();
+        try {
+            //perform your database operations here ...
+            // delete any existing table
+            mydatabase.execSQL("DROP TABLE IF EXISTS Restaurant");
+            // create a new table for restaurants
+            mydatabase.setTransactionSuccessful(); //commit your changes
+        }
+        catch (Exception e) {
+            //report problem
+            Log.d("res1", "error in dropping table");
+        }
+        finally {
+            mydatabase.endTransaction();
+        }
 
     }
 
@@ -193,7 +239,6 @@ public class waranteeList extends AppCompatActivity {
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(Void v) {
             super.onPostExecute(v);
@@ -267,6 +312,28 @@ public class waranteeList extends AppCompatActivity {
                     String sellerPhone = jsonObject.getString("sellerPhone");
                     String sellerEmail = jsonObject.getString("sellerEmail");
                     warantyList.add(new Waranty(uid, warantyId, date, amount, category, warantyPeriod, sellerName, sellerPhone, sellerEmail));
+                    mydatabase.beginTransaction();
+                    try {
+                        // insert downloaded data into database
+                        ContentValues values = new ContentValues( );
+                        values.put("id" , warantyId);
+                        values.put("id" , uid);
+                        values.put("date", date);
+                        values.put("amount", amount);
+                        values.put("category" , category);
+                        values.put("warantyPeriod" , warantyPeriod);
+                        values.put("sellerName", sellerName);
+                        values.put("sellerPhone", sellerPhone);
+                        values.put("sellerEmail", sellerEmail);
+                        mydatabase.insert("Waranty" , "" , values);
+                        mydatabase.setTransactionSuccessful(); //commit your changes
+                    }
+                    catch (Exception e) {
+                        //report problem
+                    }
+                    finally {
+                        mydatabase.endTransaction();
+                    }
                 }
                 lengthOfWarantees = jsonArray.length();
                 Log.d("jsondone", lengthOfWarantees + "");
