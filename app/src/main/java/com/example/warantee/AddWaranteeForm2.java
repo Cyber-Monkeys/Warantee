@@ -71,6 +71,16 @@ public class AddWaranteeForm2 extends AppCompatActivity {
         if (!hasCamera())
             captureImage.setEnabled(false);
 
+
+        //Next Page Button
+        back = (Button)  findViewById(R.id.BackButton) ;
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAddWaranteeForm();
+            }
+        });
+
         //Create submission button
         submit = (Button) findViewById(R.id.FormSubmitButton);
 
@@ -165,4 +175,11 @@ public class AddWaranteeForm2 extends AppCompatActivity {
         return video;
     }
     //----------------------------- End Of Camera -----------------------------
+
+    //----------------------------- OpenAddWarantee Function -----------------------
+    public void openAddWaranteeForm(){
+        Intent intent = new Intent(this, AddWaranteeForm.class);
+        startActivity(intent);
+    }
+    //----------------------------- End of OpenAddWarantee -------------------------
 }
