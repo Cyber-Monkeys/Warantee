@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,6 +42,7 @@ public class AddWaranteeForm2 extends AppCompatActivity {
     private static final int REQUEST_TAKE_VIDEO = 2;
     ImageView warrantyImage;
     VideoView warantyVideo;
+    MediaController media;
     Button submit;
     private String name;
     private String phone;
@@ -86,6 +88,8 @@ public class AddWaranteeForm2 extends AppCompatActivity {
 //        //Create submission button
 //        submit = (Button) findViewById(R.id.FormSubmitButton);
 
+        media = new MediaController(this);
+
     }
 
 
@@ -113,9 +117,12 @@ public class AddWaranteeForm2 extends AppCompatActivity {
             warrantyImage.setImageBitmap(Photo);
         } else  if(requestCode == REQUEST_TAKE_VIDEO && resultCode == RESULT_OK) {
             warantyVideo.setVideoPath(currentVideoPath);
+            warantyVideo.setMediaController(media);
+            media.setAnchorView(warantyVideo);
             warantyVideo.start();
         }
     }
+
     public void getPhotoFromCamera(View V) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
