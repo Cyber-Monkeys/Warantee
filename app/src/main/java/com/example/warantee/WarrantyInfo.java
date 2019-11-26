@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
@@ -53,7 +54,6 @@ public class WarrantyInfo extends AppCompatActivity {
         media = new MediaController(this);
 
 
-
         mydatabase = openOrCreateDatabase("WaranteeDatabase",MODE_PRIVATE,null);
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
@@ -62,7 +62,27 @@ public class WarrantyInfo extends AppCompatActivity {
         date.setText(c.getString(c.getColumnIndex("date")));
         amount.setText(c.getString(c.getColumnIndex("amount")));
         warantyPeriod.setText(c.getString(c.getColumnIndex("warantyPeriod")));
-        category.setText(c.getString(c.getColumnIndex("category")));
+
+        String categoryWarranty=" ";
+        switch (c.getString(c.getColumnIndex("category"))){
+            case "0":
+                categoryWarranty = "Food";
+                break;
+            case "1":
+                categoryWarranty = "Grocery";
+                break;
+            case "2":
+                categoryWarranty = "Travel";
+                break;
+            case "3":
+                categoryWarranty = "Electronics";
+                break;
+            case "4":
+                categoryWarranty = "Others";
+                break;
+        }
+
+        category.setText(categoryWarranty);
         sellerName.setText(c.getString(c.getColumnIndex("sellerName")));
         sellerPhone.setText(c.getString(c.getColumnIndex("sellerPhone")));
         sellerEmail.setText(c.getString(c.getColumnIndex("sellerEmail")));
@@ -79,6 +99,7 @@ public class WarrantyInfo extends AppCompatActivity {
                 videoView.start();
             }
         };
+
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         mUser.getIdToken(true)
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
@@ -103,5 +124,9 @@ public class WarrantyInfo extends AppCompatActivity {
                 });
         //download Video
 
+    }
+
+    public void goBack(View view){
+        finish();
     }
 }
