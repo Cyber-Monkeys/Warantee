@@ -3,24 +3,32 @@ package com.example.warantee;
 public class Waranty {
 
     String id;
+    String uid;
     String date;
-    int amount;
+    float amount;
     String category;
     int warantyPeriod;
     String sellerName;
     String sellerPhone;
     String sellerEmail;
+
+
+
+    String imageLocation;
     public Waranty() {
         this.id = "x";
+        this.uid = "xx";
         this.date = "xx/xx/xxxx";
         this.amount = -1;
-        this.category = "xxx";
+        this.category = "2";
         this.warantyPeriod = -1;
         this.sellerName = "xxxx";
         this.sellerPhone = "xxxx";
         this.sellerEmail = "xx@xx.com";
+        this.imageLocation = "";
     }
-    public Waranty(String id, String date, int amount, String category, int warantyPeriod, String sellerName, String sellerPhone, String sellerEmail) {
+    public Waranty(String uid, String id, String date, float amount, String category, int warantyPeriod, String sellerName, String sellerPhone, String sellerEmail) {
+        this.uid = uid;
         this.id = id;
         this.date = date;
         this.amount = amount;
@@ -29,10 +37,20 @@ public class Waranty {
         this.sellerName = sellerName;
         this.sellerPhone = sellerPhone;
         this.sellerEmail = sellerEmail;
+        this.imageLocation = "";
     }
+
+
+    public String getUid() { return uid; }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     public String getId() {
         return id;
     }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -45,11 +63,11 @@ public class Waranty {
         this.date = date;
     }
 
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
@@ -92,4 +110,8 @@ public class Waranty {
     public void setSellerEmail(String sellerEmail) {
         this.sellerEmail = sellerEmail;
     }
+
+    public String getImageLocation() { return imageLocation; }
+
+    public void setImageLocation(String imageLocation) { this.imageLocation = imageLocation; }
 }
