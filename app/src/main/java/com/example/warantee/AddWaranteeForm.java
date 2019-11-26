@@ -33,13 +33,13 @@ public class AddWaranteeForm extends AppCompatActivity {
 
     //Next Button
     private Button next;
-    private String name;
-    private String phone;
-    private String email;
-    private String date;
-    private int WarantyPeriod;
-    private int category;
-    private String amount;
+    private String name = "";
+    private String phone = "";
+    private String email = "";
+    private String date ;
+    private int WarantyPeriod = 0;
+    private int category = 0;
+    private String amount= "0";
 
     //Variables for capturing and Viewing the Image
     static final int REQUEST_IMAGE_CAPTURE = 1;
