@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputType;
@@ -70,7 +71,6 @@ public class Login extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         forgotPassword = (TextView) findViewById(R.id.forgotPassword);
-
         //Set background transparency to 80%
         View backgroundimage = findViewById(R.id.background);
         Drawable background = backgroundimage.getBackground();

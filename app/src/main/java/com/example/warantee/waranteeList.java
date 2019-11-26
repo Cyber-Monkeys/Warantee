@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -63,9 +66,12 @@ import com.google.firebase.auth.GetTokenResult;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import java.security.GeneralSecurityException;
@@ -89,8 +95,11 @@ public class waranteeList extends AppCompatActivity {
 
     private ArrayList<Waranty> warantyList;
     private int lengthOfWarantees = 0;
+    private boolean isUserInteracting = false;
+    private int selectedCategory = 0;
 
     protected Handler handler;
+    SQLiteDatabase mydatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +107,23 @@ public class waranteeList extends AppCompatActivity {
         setContentView(R.layout.activity_warantee_list);
         listView = (ListView) findViewById(R.id.warantees);
         warantyList = new ArrayList<Waranty>();
-
+        mydatabase = openOrCreateDatabase("WaranteeDatabase",MODE_PRIVATE,null);
+        Spinner dropdown = findViewById(R.id.categorySpinner);
+        mydatabase.beginTransaction();
+        try {
+            //perform your database operations here ...
+            // delete any existing table
+            // create a new table for restaurants
+            mydatabase.execSQL("CREATE TABLE IF NOT EXISTS Waranty(id INTEGER PRIMARY KEY,uid VARCHAR, date VARCHAR, amount FLOAT, category INTEGER, warantyPeriod INTEGER, sellerName VARCHAR, sellerPhone VARCHAR, sellerEmail VARCHAR );");
+            mydatabase.setTransactionSuccessful(); //commit your changes
+        }
+        catch (Exception e) {
+            //report problem
+            Log.d("res1", "error in creating table");
+        }
+        finally {
+            mydatabase.endTransaction();
+        }
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -112,6 +137,61 @@ public class waranteeList extends AppCompatActivity {
                 //update local database here?
             }
         };
+        String[] spinnerTitles;
+        int[] spinnerImages;
+
+        spinnerTitles = new String[]{"Food", "Grocery", "Travel", "Electronics", "Others"};
+        spinnerImages = new int[]{R.drawable.ic_local_dining_24px
+                , R.drawable.ic_local_grocery_store_24px
+                , R.drawable.ic_directions_car_24px
+                , R.drawable.ic_devices_other_24px
+                , R.drawable.ic_emoji_objects_24px};
+        CustomFormAdapter mCustomAdapter = new CustomFormAdapter(this, spinnerTitles, spinnerImages);
+        dropdown.setAdapter(mCustomAdapter);
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView adapterView, View view, int i, long l) {
+                if (isUserInteracting) {
+                    Toast.makeText(context, spinnerTitles[i], Toast.LENGTH_SHORT).show();
+                    selectedCategory = i;
+                    //load from database where category = blah blah
+                    Cursor c = mydatabase.query("Waranty", null, "category=?", new String[]{selectedCategory + ""}, null, null, null);
+                    warantyList.clear();
+                    while(c.moveToNext()) {
+                        String uid = c.getString(c.getColumnIndex("uid"));
+                        String id = c.getString(c.getColumnIndex("id"));
+                        String date = c.getString(c.getColumnIndex("date"));
+                        float amount = Float.parseFloat(c.getString(c.getColumnIndex("amount")));
+                        String category = c.getString(c.getColumnIndex("category"));
+                        int warantyPeriod = Integer.parseInt(c.getString(c.getColumnIndex("warantyPeriod")));
+                        String sellerName = c.getString(c.getColumnIndex("sellerName"));
+                        String sellerPhone = c.getString(c.getColumnIndex("sellerPhone"));
+                        String sellerEmail = c.getString(c.getColumnIndex("sellerEmail"));
+                        Waranty W = new Waranty(uid, id, date, amount, category, warantyPeriod, sellerName, sellerPhone, sellerEmail);
+                        W.setImageLocation(getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath() + id + ".jpg");
+                        warantyList.add(W);
+                    }
+                    mAdapter = new WarantyAdapter(context, warantyList);
+                    listView.setAdapter(mAdapter);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView adapterView) {
+
+            }
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                Intent i = new Intent(parent.getContext(),WarrantyInfo.class);
+                i.putExtra("id", warantyList.get(position).getId());
+                startActivity(i);
+            }
+
+        });
                 mFirebaseAuth = FirebaseAuth.getInstance();
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -162,9 +242,15 @@ public class waranteeList extends AppCompatActivity {
                     }
                 });
     }
+    @Override
     protected void onStart(){
         super.onStart();
         mFirebaseAuth.addAuthStateListener(mAuthListener);
+    }
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        isUserInteracting = true;
     }
 
     public void LogOutButtonPressed(View V) {
@@ -172,6 +258,21 @@ public class waranteeList extends AppCompatActivity {
         mGoogleSignInClient.signOut();
         LoginManager.getInstance().logOut();
         AccessToken.setCurrentAccessToken(null);
+        mydatabase.beginTransaction();
+        try {
+            //perform your database operations here ...
+            // delete any existing table
+            mydatabase.execSQL("DROP TABLE IF EXISTS Waranty");
+            // create a new table for restaurants
+            mydatabase.setTransactionSuccessful(); //commit your changes
+        }
+        catch (Exception e) {
+            //report problem
+            Log.d("res1", "error in dropping table");
+        }
+        finally {
+            mydatabase.endTransaction();
+        }
 
     }
 
@@ -193,7 +294,6 @@ public class waranteeList extends AppCompatActivity {
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(Void v) {
             super.onPostExecute(v);
@@ -267,6 +367,30 @@ public class waranteeList extends AppCompatActivity {
                     String sellerPhone = jsonObject.getString("sellerPhone");
                     String sellerEmail = jsonObject.getString("sellerEmail");
                     warantyList.add(new Waranty(uid, warantyId, date, amount, category, warantyPeriod, sellerName, sellerPhone, sellerEmail));
+                    mydatabase.beginTransaction();
+                    try {
+                        // insert downloaded data into database
+                        ContentValues values = new ContentValues( );
+                        values.put("id" , warantyId);
+                        values.put("uid" , uid);
+                        values.put("date", date);
+                        values.put("amount", amount);
+                        values.put("category" , category);
+                        values.put("warantyPeriod" , warantyPeriod);
+                        values.put("sellerName", sellerName);
+                        values.put("sellerPhone", sellerPhone);
+                        values.put("sellerEmail", sellerEmail);
+                        mydatabase.insert("Waranty" , "" , values);
+                        mydatabase.setTransactionSuccessful(); //commit your changes
+
+                    }
+                    catch (Exception e) {
+                        //report problem
+                        Log.d("res4", e.getMessage());
+                    }
+                    finally {
+                        mydatabase.endTransaction();
+                    }
                 }
                 lengthOfWarantees = jsonArray.length();
                 Log.d("jsondone", lengthOfWarantees + "");
