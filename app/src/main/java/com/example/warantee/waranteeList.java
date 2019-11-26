@@ -109,7 +109,7 @@ public class waranteeList extends AppCompatActivity {
             //perform your database operations here ...
             // delete any existing table
             // create a new table for restaurants
-            mydatabase.execSQL("CREATE TABLE IF NOT EXISTS Waranty(id INTEGER PRIMARY KEY,uid VARCHAR,date VARCHAR, amount FLOAT, category INTEGER, warantyPeriod INTEGER, sellerName VARCHAR, sellerPhone VARCHAR, sellerEmail VARCHAR );");
+            mydatabase.execSQL("CREATE TABLE IF NOT EXISTS Waranty(id INTEGER PRIMARY KEY,uid VARCHAR, date VARCHAR, amount FLOAT, category INTEGER, warantyPeriod INTEGER, sellerName VARCHAR, sellerPhone VARCHAR, sellerEmail VARCHAR );");
             mydatabase.setTransactionSuccessful(); //commit your changes
         }
         catch (Exception e) {
@@ -132,18 +132,17 @@ public class waranteeList extends AppCompatActivity {
                 //update local database here?
             }
         };
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, final View view,
-//                                    int position, long id) {
-//                Intent i = new Intent(parent.getContext(),RestaurantInformation.class);
-//                i.putExtra("restaurant", waranteeList.get(position));
-//                i.putExtra("restId", position + 1 + "");
-//                startActivityForResult(i, 1);
-//            }
-//
-//        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                Intent i = new Intent(parent.getContext(),WarrantyInfo.class);
+                i.putExtra("id", warantyList.get(position).getId());
+                startActivity(i);
+            }
+
+        });
                 mFirebaseAuth = FirebaseAuth.getInstance();
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -318,7 +317,7 @@ public class waranteeList extends AppCompatActivity {
                         // insert downloaded data into database
                         ContentValues values = new ContentValues( );
                         values.put("id" , warantyId);
-                        values.put("uid" , uid);
+                        values.put("id" , uid);
                         values.put("date", date);
                         values.put("amount", amount);
                         values.put("category" , category);
