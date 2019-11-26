@@ -16,38 +16,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/searchbar"
-        android:layout_width="0dp"
+    <Spinner
+        android:id="@+id/categorySpinner"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:weightSum="15"
+        android:layout_weight="14"
         app:layout_constraintBottom_toTopOf="@+id/warantees"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@android:drawable/ic_menu_search"
-            android:backgroundTint="#696969" />
-
-        <EditText
-            android:id="@+id/warantyPhone"
-            android:layout_width="368dp"
-            android:layout_height="match_parent"
-            android:layout_weight="14"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="89dp"
-            android:layout_height="match_parent"
-            android:layout_weight="14" />
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ListView
         android:id="@+id/warantees"
