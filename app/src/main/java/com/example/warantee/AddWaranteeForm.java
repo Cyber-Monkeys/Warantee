@@ -143,10 +143,6 @@ public class AddWaranteeForm extends AppCompatActivity {
 //            }
 //        };
 
-
-
-
-
         Button submitButton;
 
         EditText editText1;
