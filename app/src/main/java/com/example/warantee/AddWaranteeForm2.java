@@ -74,14 +74,6 @@ public class AddWaranteeForm2 extends AppCompatActivity {
             captureImage.setEnabled(false);
 
 
-        //Next Page Button
-        back = (Button)  findViewById(R.id.BackButton) ;
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openAddWaranteeForm();
-            }
-        });
 
         //Create submission button
         submit = (Button) findViewById(R.id.FormSubmitButton);
