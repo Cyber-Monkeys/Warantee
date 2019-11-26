@@ -19,6 +19,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.GeneralSecurityException;
 
+import javax.net.ssl.HttpsURLConnection;
+
 public class GetAllWaranteesTask extends AsyncTask<String, Void, Void> {
     @Override
     protected Void doInBackground(String... urls) {
@@ -32,7 +34,7 @@ public class GetAllWaranteesTask extends AsyncTask<String, Void, Void> {
         return null;
     }
     private String downloadFile(String token) throws IOException, GeneralSecurityException {
-        String myurl = "http://192.168.43.232:3000/waranty";
+        String myurl = "https://www.vrpacman.com/waranty";
         InputStream is = null;
         OutputStream outStream = null;
         File targetFile = null;
@@ -42,7 +44,7 @@ public class GetAllWaranteesTask extends AsyncTask<String, Void, Void> {
         Log.d("result1startdownload", myurl);
         try {
             URL url = new URL(myurl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             Log.d("res1", token);
             conn.setRequestProperty("AuthToken", token);

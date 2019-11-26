@@ -33,13 +33,13 @@ public class AddWaranteeForm extends AppCompatActivity {
 
     //Next Button
     private Button next;
-    private String name;
-    private String phone;
-    private String email;
-    private String date;
-    private int WarantyPeriod;
-    private int category;
-    private String amount;
+    private String name = "Humaid";
+    private String phone = "32424";
+    private String email = "humaidk@gmail.com";
+    private String date = "29/10/2019";
+    private int WarantyPeriod = 30;
+    private int category = 2;
+    private String amount= "50.5";
 
     //Variables for capturing and Viewing the Image
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -71,6 +71,11 @@ public class AddWaranteeForm extends AppCompatActivity {
         warantyPeriodEditText = (EditText) findViewById(R.id.warantyPeriod);
         amountEditText = (EditText) findViewById(R.id.warantyAmount);
         myCalendar = Calendar.getInstance();
+        nameEditText.setText("Humaid");
+        phoneEditText.setText("34242");
+        emailEditText.setText("humaidk2@gmail.com");
+        warantyPeriodEditText.setText("50");
+        amountEditText.setText("244");
         String[] spinnerTitles;
         int[] spinnerImages;
 

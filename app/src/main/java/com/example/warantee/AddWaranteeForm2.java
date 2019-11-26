@@ -50,6 +50,7 @@ public class AddWaranteeForm2 extends AppCompatActivity {
     private int category;
     private String amount;
     private String currentPhotoPath, currentVideoPath;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +62,7 @@ public class AddWaranteeForm2 extends AppCompatActivity {
         WarantyPeriod = intent.getStringExtra("period");
         category = intent.getIntExtra("category", 0);
         amount = intent.getStringExtra("amount");
+        context = this.getApplicationContext();
 
         intent.putExtra("category", category);
         setContentView(R.layout.content_add_warentee_form_2);
@@ -153,7 +155,7 @@ public class AddWaranteeForm2 extends AppCompatActivity {
         }
     }
     public void submitWaranty(View V) {
-        String stringUrl = "http://159.65.140.187:3000/waranty";
+        String stringUrl = "https://www.vrpacman.com/waranty";
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         mUser.getIdToken(true)
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
@@ -164,7 +166,7 @@ public class AddWaranteeForm2 extends AppCompatActivity {
                             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
                             if (networkInfo != null && networkInfo.isConnected()) {
                                 Log.d("res3", "start upload");
-                                new InsertWarantyTask().execute(stringUrl, idToken, date, amount + "", category + "", WarantyPeriod + "", name, phone, email, currentPhotoPath, currentVideoPath);
+                                new InsertWarantyTask(context).execute(stringUrl, idToken, date, amount + "", category + "", WarantyPeriod + "", name, phone, email, currentPhotoPath, currentVideoPath);
 
                             } else {
                                 Log.d("result2", "error");
@@ -195,10 +197,7 @@ public class AddWaranteeForm2 extends AppCompatActivity {
     }
     //----------------------------- End Of Camera -----------------------------
 
-    //----------------------------- OpenAddWarantee Function -----------------------
-    public void openAddWaranteeForm(){
-        Intent intent = new Intent(this, AddWaranteeForm.class);
-        startActivity(intent);
-    }
+
     //----------------------------- End of OpenAddWarantee -------------------------
+
 }

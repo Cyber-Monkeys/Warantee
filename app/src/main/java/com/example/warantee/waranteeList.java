@@ -73,6 +73,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
+
 public class waranteeList extends AppCompatActivity {
     GoogleSignInClient googleSignInClient;
     private Toolbar toolbar;
@@ -197,12 +199,12 @@ public class waranteeList extends AppCompatActivity {
             super.onPostExecute(v);
             Log.d("res1", "start PostExecute" + warantyList.size());
             for(int i = 0;i < lengthOfWarantees;i++) {
-                Thread obj = new Thread(new GetWaranteeImageTask("http://159.65.140.187:3000/s3proxy?fileKey=" + warantyList.get(i).getUid() + warantyList.get(i).getId() + ".jpg", i, warantyList.get(i).getId(), getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath(), this.idtoken, handler ));
+                Thread obj = new Thread(new GetWaranteeImageTask("https://www.vrpacman.com/s3proxy?fileKey=" + warantyList.get(i).getUid() + warantyList.get(i).getId() + ".jpg", i, warantyList.get(i).getId(), getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath(), this.idtoken, handler ));
                 obj.start();
             }
         }
         private String downloadFile(String token) throws IOException, GeneralSecurityException {
-            String myurl = "http://159.65.140.187:3000/waranty";
+            String myurl = "https://www.vrpacman.com/waranty";
             InputStream is = null;
             OutputStream outStream = null;
             File targetFile = null;
@@ -212,7 +214,7 @@ public class waranteeList extends AppCompatActivity {
             Log.d("result1startdownload", myurl);
             try {
                 URL url = new URL(myurl);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 Log.d("res1", token);
                 conn.setRequestProperty("AuthToken", token);
@@ -246,7 +248,7 @@ public class waranteeList extends AppCompatActivity {
                     outStream.close();
                 }
             }
-            return targetFile.getAbsolutePath();
+            return "";
 
         }
         private void processJSON(String result){

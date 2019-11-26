@@ -1,5 +1,6 @@
 package com.example.warantee;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -13,10 +14,17 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.net.ssl.HttpsURLConnection;
+
 public class UploadPhotoTask extends AsyncTask<String, Void, String> {
     public String warantyId;
     public String currentVideoPath;
     public String idToken;
+
+    Context context;
+    UploadPhotoTask(Context context) {
+        this.context = context.getApplicationContext();
+    }
     @Override
     protected String doInBackground(String... urls) {
         this.currentVideoPath = urls[3];
@@ -28,19 +36,19 @@ public class UploadPhotoTask extends AsyncTask<String, Void, String> {
     @Override
     protected  void onPostExecute(String result) {
         Log.d("result1", result);
-        new UploadVideoTask().execute(this.idToken, this.warantyId, this.currentVideoPath);
+        new UploadVideoTask(this.context).execute(this.idToken, this.warantyId, this.currentVideoPath);
     }
     public String uploadPhoto(String idToken, String warantyId, String filePath) {
-        String urlName = "http://172.28.24.229:3000/photo";
+        String urlName = "https://www.vrpacman.com/photo";
         String fileName = filePath;
-        HttpURLConnection conn = null;
+        HttpsURLConnection conn = null;
         DataOutputStream dos = null;
         String lineEnd = "\r\n";
         String twoHyphens = "--";
         String boundary = "*****";
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
-        int maxBufferSize = 1 * 1024 * 1024;
+        int maxBufferSize = 1 * 10 * 1024;
 
         File sourceFile = new File(filePath);
         if (!sourceFile.isFile()) {
@@ -53,7 +61,7 @@ public class UploadPhotoTask extends AsyncTask<String, Void, String> {
             Log.d("res3", "start sending");
             FileInputStream fileInputStream = new FileInputStream(sourceFile);
             URL url = new URL(urlName);
-            conn = (HttpURLConnection) url.openConnection();
+            conn = (HttpsURLConnection) url.openConnection();
             conn.setDoInput(true);
             conn.setDoOutput(true);
             conn.setUseCaches(false);
