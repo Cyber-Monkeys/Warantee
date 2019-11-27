@@ -58,37 +58,39 @@ public class WarrantyInfo extends AppCompatActivity {
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
         Cursor c = mydatabase.query("Waranty", null, "id=?", new String[]{id}, null, null, null);
-        c.moveToNext();
-        date.setText(c.getString(c.getColumnIndex("date")));
-        amount.setText(c.getString(c.getColumnIndex("amount")));
-        warantyPeriod.setText(c.getString(c.getColumnIndex("warantyPeriod")));
-        location = c.getString(c.getColumnIndex("location"));
+        while(c.moveToNext()) {
+            date.setText(c.getString(c.getColumnIndex("date")));
+            amount.setText(c.getString(c.getColumnIndex("amount")));
+            warantyPeriod.setText(c.getString(c.getColumnIndex("warantyPeriod")));
+            location = c.getString(c.getColumnIndex("location"));
 
-        String categoryWarranty=" ";
-        switch (c.getString(c.getColumnIndex("category"))){
-            case "0":
-                categoryWarranty = "Food";
-                break;
-            case "1":
-                categoryWarranty = "Grocery";
-                break;
-            case "2":
-                categoryWarranty = "Travel";
-                break;
-            case "3":
-                categoryWarranty = "Electronics";
-                break;
-            case "4":
-                categoryWarranty = "Others";
-                break;
+            String categoryWarranty=" ";
+            switch (c.getString(c.getColumnIndex("category"))){
+                case "0":
+                    categoryWarranty = "Food";
+                    break;
+                case "1":
+                    categoryWarranty = "Grocery";
+                    break;
+                case "2":
+                    categoryWarranty = "Travel";
+                    break;
+                case "3":
+                    categoryWarranty = "Electronics";
+                    break;
+                case "4":
+                    categoryWarranty = "Others";
+                    break;
+            }
+
+            category.setText(categoryWarranty);
+            sellerName.setText(c.getString(c.getColumnIndex("sellerName")));
+            sellerPhone.setText(c.getString(c.getColumnIndex("sellerPhone")));
+            sellerEmail.setText(c.getString(c.getColumnIndex("sellerEmail")));
+            Bitmap bm = BitmapFactory.decodeFile(getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath() + id + ".jpg");
+            imageView.setImageBitmap(bm);
         }
 
-        category.setText(categoryWarranty);
-        sellerName.setText(c.getString(c.getColumnIndex("sellerName")));
-        sellerPhone.setText(c.getString(c.getColumnIndex("sellerPhone")));
-        sellerEmail.setText(c.getString(c.getColumnIndex("sellerEmail")));
-        Bitmap bm = BitmapFactory.decodeFile(getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath() + id + ".jpg");
-        imageView.setImageBitmap(bm);
 
         handler = new Handler(){
             @Override
