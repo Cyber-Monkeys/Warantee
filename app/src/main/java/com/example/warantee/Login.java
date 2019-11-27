@@ -7,12 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +22,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -33,11 +30,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -49,10 +44,10 @@ import java.util.Arrays;
 
 public class Login extends AppCompatActivity {
 
+    //variables
     private static final String TAG = "AndroidClarified";
     private GoogleSignInClient googleSignInClient;
     private SignInButton googleSignInButton;
-
     private EditText emailText, passwordText;
     private TextView forgotPassword;
     private Button btnLogIn;
@@ -63,20 +58,20 @@ public class Login extends AppCompatActivity {
     CallbackManager callbackManager;
     ProgressDialog progressDialog;
 
+    //onCreate function
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //Initializing views
         progressDialog = new ProgressDialog(this);
-
         forgotPassword = (TextView) findViewById(R.id.forgotPassword);
         //Set background transparency to 80%
         View backgroundimage = findViewById(R.id.background);
         Drawable background = backgroundimage.getBackground();
         background.setAlpha(80);
 
-        //Initializing views
         googleSignInButton = findViewById(R.id.sign_in_button);
         googleSignInButton.setColorScheme(SignInButton.COLOR_DARK);
 
@@ -99,6 +94,7 @@ public class Login extends AppCompatActivity {
 
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
 
+        //check if an account is logged in or not
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
 
             @Override
@@ -116,6 +112,7 @@ public class Login extends AppCompatActivity {
             }
         };
 
+        //login user using email and password
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,6 +147,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        //facebook login
         fbLogInButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -167,6 +165,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        //google login
         googleSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -179,6 +178,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        //forgot password onClick
         forgotPassword.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -187,12 +187,14 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    //onStart function
     @Override
     protected void onStart(){
         super.onStart();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
 
+    //make an alert dialog for forgot password
     private void showForgotPasswordDialog(){
         //AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -234,6 +236,7 @@ public class Login extends AppCompatActivity {
 
     }
 
+    //sending email to user for reset password
     private void beginRecovery(String email){
         progressDialog.setMessage("Sending email...");
         progressDialog.show();
@@ -257,6 +260,7 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    //go to sign in google
     private void signInGoogle(){
         Intent signIntent = googleSignInClient.getSignInIntent();
         startActivityForResult(signIntent, RC_SIGN_IN);
@@ -282,6 +286,7 @@ public class Login extends AppCompatActivity {
         }
     }
 
+    //authenticate google account
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
@@ -305,6 +310,7 @@ public class Login extends AppCompatActivity {
                 });
     }
 
+    //authenticate facebook account
     private void handleFacebookToken(AccessToken accessToken){
         AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
         mFirebaseAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -321,6 +327,7 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    //go to sign up page
     public void goToSignUp(View view){
         startActivity(new Intent(this, SignUp.class));
     }
