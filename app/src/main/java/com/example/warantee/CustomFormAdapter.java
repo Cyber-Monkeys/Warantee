@@ -34,8 +34,8 @@ public class CustomFormAdapter extends ArrayAdapter {
             LayoutInflater mInflater = (LayoutInflater) mContext.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.custom_form_spinner_row, parent, false);
-            mViewHolder.mFlag = (ImageView) convertView.findViewById(R.id.ivFlag);
-            mViewHolder.mName = (TextView) convertView.findViewById(R.id.tvName);
+            mViewHolder.mFlag = convertView.findViewById(R.id.ivFlag);
+            mViewHolder.mName = convertView.findViewById(R.id.tvName);
             convertView.setTag(mViewHolder);
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();

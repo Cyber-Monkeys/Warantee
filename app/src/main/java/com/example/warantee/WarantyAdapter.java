@@ -3,7 +3,6 @@ package com.example.warantee;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,13 +27,13 @@ public class WarantyAdapter extends ArrayAdapter<Waranty> {
         View listItem = convertView;
         if(listItem == null) listItem = LayoutInflater.from(mContext).inflate(R.layout.activity_warantee_list_item, parent, false);
         Waranty currentWaranty = warantyList.get(position);
-        TextView id = (TextView) listItem.findViewById(R.id.warantyItemID); id.setText(currentWaranty.getId());
-        TextView seller = (TextView) listItem.findViewById(R.id.warantyItemSeller); seller.setText(currentWaranty.getSellerName());
-        TextView days = (TextView) listItem.findViewById(R.id.warantyItemDays); days.setText(currentWaranty.getWarantyPeriod() + "");
-        ImageView image = (ImageView) listItem.findViewById(R.id.warantyItemImage);
+        TextView id = listItem.findViewById(R.id.warantyItemID); id.setText(currentWaranty.getId());
+        TextView seller = listItem.findViewById(R.id.warantyItemSeller); seller.setText(currentWaranty.getSellerName());
+        TextView days = listItem.findViewById(R.id.warantyItemDays); days.setText(currentWaranty.getWarantyPeriod() + "");
+        ImageView image = listItem.findViewById(R.id.warantyItemImage);
         Bitmap bm = BitmapFactory.decodeFile(currentWaranty.getImageLocation());
         image.setImageBitmap(bm);
-        ImageView category = (ImageView) listItem.findViewById(R.id.warantyItemCategory);
+        ImageView category = listItem.findViewById(R.id.warantyItemCategory);
         switch(Integer.parseInt(currentWaranty.getCategory())) {
             case 0:
                 category.setImageResource(R.drawable.ic_local_dining_24px);

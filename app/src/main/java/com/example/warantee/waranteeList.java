@@ -1,95 +1,55 @@
 package com.example.warantee;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.TaskStackBuilder;
-import androidx.core.content.FileProvider;
-
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.icu.util.Calendar;
-import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.net.URLEncoder;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.VideoView;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class waranteeList extends AppCompatActivity {
     private static final int DAILY_REMINDER_REQUEST_CODE = 4;
@@ -117,7 +77,7 @@ public class waranteeList extends AppCompatActivity {
         NotificationScheduler.setReminder(waranteeList.this, AlarmReceiver.class, 9, 2);
         context = this.getApplicationContext();
         setContentView(R.layout.activity_warantee_list);
-        listView = (ListView) findViewById(R.id.warantees);
+        listView = findViewById(R.id.warantees);
         warantyList = new ArrayList<Waranty>();
         mydatabase = openOrCreateDatabase("WaranteeDatabase",MODE_PRIVATE,null);
         Spinner dropdown = findViewById(R.id.categorySpinner);

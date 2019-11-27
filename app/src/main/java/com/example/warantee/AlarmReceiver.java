@@ -24,7 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO Auto-generated method stub
-        SQLiteDatabase mydatabase = context.openOrCreateDatabase("WaranteeDatabase",context.MODE_PRIVATE,null);
+        SQLiteDatabase mydatabase = context.openOrCreateDatabase("WaranteeDatabase", Context.MODE_PRIVATE,null);
         if (intent.getAction() != null && context != null) {
             if (intent.getAction().equalsIgnoreCase(Intent.ACTION_BOOT_COMPLETED)) {
                 // Set the alarm here.

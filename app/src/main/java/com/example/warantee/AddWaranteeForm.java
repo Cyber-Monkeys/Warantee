@@ -2,31 +2,20 @@ package com.example.warantee;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.provider.MediaStore;
-import android.content.pm.PackageInfo;
-import android.view.View;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.text.SimpleDateFormat;
-import java.time.Year;
 import java.util.Calendar;
-import java.util.Locale;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class AddWaranteeForm extends AppCompatActivity {
@@ -66,12 +55,12 @@ public class AddWaranteeForm extends AppCompatActivity {
         Spinner dropdown = findViewById(R.id.spinner3);
         Context context = this.getApplicationContext();
 //set the spinners adapter to the previously created one.
-        nameEditText = (EditText) findViewById(R.id.warantyName);
-        phoneEditText = (EditText) findViewById(R.id.warantyPhone);
-        emailEditText = (EditText) findViewById(R.id.warantyEmail);
-        warantyPeriodEditText = (EditText) findViewById(R.id.warantyPeriod);
-        amountEditText = (EditText) findViewById(R.id.warantyAmount);
-        locationEditText = (EditText) findViewById(R.id.warantyLocation);
+        nameEditText = findViewById(R.id.warantyName);
+        phoneEditText = findViewById(R.id.warantyPhone);
+        emailEditText = findViewById(R.id.warantyEmail);
+        warantyPeriodEditText = findViewById(R.id.warantyPeriod);
+        amountEditText = findViewById(R.id.warantyAmount);
+        locationEditText = findViewById(R.id.warantyLocation);
         myCalendar = Calendar.getInstance();
         nameEditText.setText("Humaid");
         phoneEditText.setText("34242");
@@ -105,7 +94,7 @@ public class AddWaranteeForm extends AppCompatActivity {
             }
         });
         //Next Page Button
-        next = (Button)  findViewById(R.id.nextPageButton) ;
+        next = findViewById(R.id.nextPageButton);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +105,7 @@ public class AddWaranteeForm extends AppCompatActivity {
 
 
         //Date Picker Code
-        myDate = (EditText) findViewById(R.id.editText3);
+        myDate = findViewById(R.id.editText3);
         myDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

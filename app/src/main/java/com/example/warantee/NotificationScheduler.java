@@ -13,7 +13,6 @@ import android.content.pm.PackageManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.SystemClock;
 import android.util.Log;
 
 import java.util.Calendar;

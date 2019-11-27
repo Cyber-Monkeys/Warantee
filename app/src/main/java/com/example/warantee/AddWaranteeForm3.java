@@ -1,21 +1,25 @@
 package com.example.warantee;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
-import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+
+import java.util.Arrays;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 //import com.google.android.gms.location.places.Place;
 //import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 //import com.google.android.gms.location.places.ui.PlaceSelectionListener;
@@ -23,18 +27,10 @@ import com.google.android.gms.common.api.Status;
 //import com.google.android.gms.maps.OnMapReadyCallback;
 //import com.google.android.gms.maps.SupportMapFragment;
 //import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.net.PlacesClient;
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
-
-
 //import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
 //import com.google.android.libraries.places.api.net.PlacesClient;
 //import com.google.android.libraries.places.widget.Autocomplete;
 //import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-
-import java.util.Arrays;
 
 public class AddWaranteeForm3 extends AppCompatActivity implements OnMapReadyCallback {
 

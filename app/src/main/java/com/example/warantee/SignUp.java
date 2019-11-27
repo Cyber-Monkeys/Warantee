@@ -1,8 +1,5 @@
 package com.example.warantee;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -16,6 +13,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SignUp extends AppCompatActivity {
 
@@ -39,10 +39,10 @@ public class SignUp extends AppCompatActivity {
         //initializing views
         progressDialog = new ProgressDialog(this);
         mFirebaseAuth = FirebaseAuth.getInstance();
-        emailText = (EditText)findViewById(R.id.email);
-        passwordText = (EditText) findViewById(R.id.password);
-        confirmPasswordText = (EditText) findViewById(R.id.confirmPassword);
-        btnSignUp = (Button) findViewById(R.id.btnLogIn);
+        emailText = findViewById(R.id.email);
+        passwordText = findViewById(R.id.password);
+        confirmPasswordText = findViewById(R.id.confirmPassword);
+        btnSignUp = findViewById(R.id.btnLogIn);
 
         //sign up onclick
         btnSignUp.setOnClickListener(new View.OnClickListener(){
