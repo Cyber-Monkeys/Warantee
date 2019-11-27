@@ -7,9 +7,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 /**
@@ -56,7 +75,81 @@ public class AlarmReceiver extends BroadcastReceiver {
                     "One of your warnatees is about to expire", "Please hurry");
         }
         //Trigger the notification
+        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser.getIdToken(true)
+                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                        if (task.isSuccessful()) {
+                            String idToken = task.getResult().getToken();
+                            ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                            if (networkInfo != null && networkInfo.isConnected()) {
+                                Log.d("res3", "start upload");
+                                new DecrementWarantyTask().execute(idToken);
+                            } else {
+                                Log.d("result2", "error");
+                            }
+                            // ...
+                        } else {
+                            // Handle error -> task.getException();
+                            Log.d("res3", "no token verified");
+                        }
+                    }
+                });
 
+    }
+
+    public class DecrementWarantyTask extends AsyncTask<String,Void,Void> {
+
+        @Override
+        protected Void doInBackground(String...token) {
+            try {
+                updateDatabase(token[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        public void updateDatabase(String token) throws IOException {
+            String myurl = "https://www.vrpacman.com/update";
+            InputStream is = null;
+            OutputStream outStream = null;
+            String inputLine;
+
+            String result = "";
+            try {
+                URL url = new URL(myurl);
+                HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("AuthToken", token);
+                conn.setReadTimeout(15000);
+                conn.setConnectTimeout(15000);
+                conn.connect();
+                Log.d("res1", "get request");
+                // Starts the query
+                int response = conn.getResponseCode();
+                InputStreamReader streamReader = new InputStreamReader(conn.getInputStream());
+                BufferedReader reader = new BufferedReader(streamReader);
+                StringBuilder stringBuilder = new StringBuilder();
+                while((inputLine = reader.readLine()) != null){
+                    stringBuilder.append(inputLine);
+                }
+                reader.close();
+                streamReader.close();
+                result = stringBuilder.toString();
+                Log.d("res2", result);
+            } catch(Exception e) {
+                Log.d("error", e.getMessage());
+            }finally {
+                if (is != null) {
+                    is.close();
+                }
+                if(outStream != null) {
+                    outStream.close();
+                }
+            }
+        }
 
     }
 }
