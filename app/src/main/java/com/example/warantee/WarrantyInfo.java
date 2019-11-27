@@ -127,6 +127,7 @@ public class WarrantyInfo extends AppCompatActivity {
     }
 
     public void goBack(View view){
-        finish();
+        Intent i = new Intent(this, waranteeList.class);
+        startActivity(i);
     }
 }
