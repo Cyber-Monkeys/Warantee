@@ -100,7 +100,6 @@
         app:layout_constraintTop_toBottomOf="@+id/btnLogIn" />
 
     <View
-        android:id="@+id/view3"
         android:layout_width="50dp"
         android:layout_height="3dp"
         android:layout_marginTop="24dp"
@@ -160,7 +159,6 @@
         app:layout_constraintTop_toBottomOf="@+id/fb_login_button" />
 
     <TextView
-        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

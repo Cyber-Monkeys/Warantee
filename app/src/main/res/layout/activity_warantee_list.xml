@@ -5,24 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:background="@drawable/gradient"
     tools:context=".waranteeList">
 
     <Button
-        android:id="@+id/button7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="LogOutButtonPressed"
         android:text="Log Out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/categorySpinner"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_weight="14"
-        app:layout_constraintBottom_toTopOf="@+id/warantees"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <ListView
         android:id="@+id/warantees"
@@ -36,18 +28,25 @@
 
     </ListView>
 
+    <Spinner
+        android:id="@+id/categorySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_weight="14"
+        app:layout_constraintBottom_toTopOf="@+id/warantees"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <com.google.android.material.chip.Chip
-        android:id="@+id/chip2"
         style="@style/Widget.MaterialComponents.ChipGroup"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:clickable="true"
         android:onClick="addWarantyPressed"
-        app:chipBackgroundColor="#069E15"
+        app:chipBackgroundColor="#FFE2B4"
         app:chipCornerRadius="50dp"
         app:chipIcon="@drawable/ic_add_24px"
         app:chipIconSize="80dp"
-        app:chipIconTint="#F8F6F6"
+        app:chipIconTint="#68000000"
         app:chipStartPadding="10dp"
         app:chipStrokeColor="#7BCF81"
         app:chipStrokeWidth="0dp"

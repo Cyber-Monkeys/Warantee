@@ -60,8 +60,8 @@ public class NotificationScheduler
         Intent intent1 = new Intent(context, cls);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        //am.setInexactRepeating(AlarmManager.RTC_WAKEUP, setcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),500 * 3, pendingIntent);
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, setcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        //am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),500 * 3, pendingIntent);
     }
 
     public static void cancelReminder(Context context,Class<?> cls)
