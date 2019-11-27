@@ -117,7 +117,8 @@ public class waranteeList extends AppCompatActivity {
                 , R.drawable.ic_local_grocery_store_24px
                 , R.drawable.ic_directions_car_24px
                 , R.drawable.ic_devices_other_24px
-                , R.drawable.ic_emoji_objects_24px};
+                , R.drawable.ic_emoji_objects_24px,
+                R.drawable.warantee};
         CustomFormAdapter mCustomAdapter = new CustomFormAdapter(this, spinnerTitles, spinnerImages);
         dropdown.setAdapter(mCustomAdapter);
         dropdown.setSelection(selectedCategory);

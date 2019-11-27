@@ -13,9 +13,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
+        android:backgroundTint="@color/buttonHint"
         android:drawableLeft="@drawable/ic_back_arrow"
         android:drawableStart="@drawable/ic_back_arrow"
         android:onClick="goBack"
+        android:textColor="@color/buttonTextColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

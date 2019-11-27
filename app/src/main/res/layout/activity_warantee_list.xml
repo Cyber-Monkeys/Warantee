@@ -11,8 +11,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/buttonHint"
         android:onClick="LogOutButtonPressed"
         android:text="Log Out"
+        android:textColor="@color/buttonTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
