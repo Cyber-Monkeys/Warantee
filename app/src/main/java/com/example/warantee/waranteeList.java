@@ -3,17 +3,27 @@ package com.example.warantee;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.FileProvider;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.icu.util.Calendar;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -82,6 +92,7 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 
 public class waranteeList extends AppCompatActivity {
+    private static final int DAILY_REMINDER_REQUEST_CODE = 4;
     GoogleSignInClient googleSignInClient;
     private Toolbar toolbar;
 
@@ -103,6 +114,7 @@ public class waranteeList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        NotificationScheduler.setReminder(waranteeList.this, AlarmReceiver.class, 4, 20);
         context = this.getApplicationContext();
         setContentView(R.layout.activity_warantee_list);
         listView = (ListView) findViewById(R.id.warantees);
