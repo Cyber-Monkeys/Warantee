@@ -72,11 +72,12 @@ public class AlarmReceiver extends BroadcastReceiver {
             mydatabase.update("Waranty" , values ,"id=?" , new String[ ] {c.getString(c.getColumnIndex("id"))} );
             id = c.getInt(c.getColumnIndex("id"));
         }
+        //Trigger the notification if any period is less than 30
         if(startNotification) {
             NotificationScheduler.showNotification(context, waranteeList.class,
                     "Waranty id " + id + " is about to expire", "Please hurry", id);
         }
-        //Trigger the notification
+        //authenticate before starting task
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         mUser.getIdToken(true)
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
@@ -101,6 +102,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     }
 
+    // server request to update  database and decrement waranty period
     public class DecrementWarantyTask extends AsyncTask<String,Void,Void> {
 
         @Override

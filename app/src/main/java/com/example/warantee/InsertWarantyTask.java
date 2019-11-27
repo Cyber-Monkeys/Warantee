@@ -16,6 +16,8 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+
+// addd data to server
 public class InsertWarantyTask extends AsyncTask<String, Void, String> {
 
     public String currentPhotoPath;

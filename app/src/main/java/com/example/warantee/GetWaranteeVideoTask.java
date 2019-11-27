@@ -13,6 +13,7 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+// gets image from server and stores it in internal storage
 public class GetWaranteeVideoTask implements Runnable {
     String url;
     String warantyId;

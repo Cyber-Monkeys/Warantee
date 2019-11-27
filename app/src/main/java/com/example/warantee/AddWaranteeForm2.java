@@ -36,6 +36,8 @@ import androidx.core.content.FileProvider;
 
 import static com.example.warantee.AddWaranteeForm.REQUEST_IMAGE_CAPTURE;
 
+
+// page 2 of form
 public class AddWaranteeForm2 extends AppCompatActivity {
 
     private static final int REQUEST_TAKE_PHOTO = 1;
@@ -56,6 +58,7 @@ public class AddWaranteeForm2 extends AppCompatActivity {
     Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // load data from intent
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
@@ -96,16 +99,8 @@ public class AddWaranteeForm2 extends AppCompatActivity {
         // if not it will disable the button
     }
 
-    //Launching the Camera
-    public void launchCamera(View view) {
-        //This intent is to to lunch the camera when this function is called
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        //after taking the image we want to save so we start an activity to save the image
-        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-    }
-
-    //Receiving the Image and displaying it in ImageView
+    //Receiving the Image and displaying it in ImageView or video and display in video view
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -119,6 +114,8 @@ public class AddWaranteeForm2 extends AppCompatActivity {
         }
     }
 
+
+    // get the photo from camera and store it in internal storage
     public void getPhotoFromCamera(View V) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -141,6 +138,7 @@ public class AddWaranteeForm2 extends AppCompatActivity {
             }
         }
     }
+    // get the video from camera and store it in internal storage
     public void getVideoFromCamera(View V) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -163,6 +161,8 @@ public class AddWaranteeForm2 extends AppCompatActivity {
             }
         }
     }
+
+    // start insert waranty task on submit
     public void submitWaranty(View V) {
 
         String stringUrl = "https://www.vrpacman.com/waranty";
@@ -190,18 +190,13 @@ public class AddWaranteeForm2 extends AppCompatActivity {
                 });
 
     }
+    // create a new file based on type specified
     private File createFile(String fileType, String ext) throws IOException {
         // Create an Video file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String videoFileName = fileType + timeStamp + ext;//change code back
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File video = new File(storageDir, videoFileName);
-//        File video = File.createTempFile(
-//                videoFileName,  /* prefix */
-//                ".mp4",         /* suffix */
-//                storageDir      /* directory */
-//        );
-
         // Save a file: path for use with ACTION_VIEW intents
         currentVideoPath = video.getAbsolutePath();
         return video;

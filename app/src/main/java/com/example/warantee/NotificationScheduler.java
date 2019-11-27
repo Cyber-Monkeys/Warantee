@@ -32,6 +32,7 @@ public class NotificationScheduler
     public static final int DAILY_REMINDER_REQUEST_CODE=100;
     public static final String TAG="NotificationScheduler";
 
+    // setting a notification reminder
     public static void setReminder(Context context,Class<?> cls,int hour, int min)
     {
         Calendar calendar = Calendar.getInstance();
@@ -40,9 +41,6 @@ public class NotificationScheduler
         setcalendar.set(Calendar.HOUR_OF_DAY, hour);
         setcalendar.set(Calendar.MINUTE, min);
         setcalendar.set(Calendar.SECOND, 0);
-
-        // cancel already scheduled reminders
-        cancelReminder(context,cls);
 
         if(setcalendar.before(calendar))
             setcalendar.add(Calendar.DATE,1);
@@ -64,31 +62,14 @@ public class NotificationScheduler
         //am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),500 * 3, pendingIntent);
     }
 
-    public static void cancelReminder(Context context,Class<?> cls)
-    {
-        // Disable a receiver
-
-        ComponentName receiver = new ComponentName(context, cls);
-        PackageManager pm = context.getPackageManager();
-
-        pm.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP);
-
-        Intent intent1 = new Intent(context, cls);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        am.cancel(pendingIntent);
-        pendingIntent.cancel();
-    }
-
+    // called when the notification is shown
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static void showNotification(Context context, Class<?> cls, String title, String content, int id)
     {
 
         Log.d("res1", "show notification");
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
+        // open the selected notification
         Intent notificationIntent = new Intent(context, WarrantyInfo.class);
         notificationIntent.putExtra("id", id);
         context.startActivity(notificationIntent);

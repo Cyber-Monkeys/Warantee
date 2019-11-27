@@ -50,6 +50,7 @@ public class AddWaranteeForm extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // link variables to ids
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_add_warantee_form);
         Spinner dropdown = findViewById(R.id.spinner3);
@@ -70,7 +71,7 @@ public class AddWaranteeForm extends AppCompatActivity {
         locationEditText.setText("UOWD Dubai");
         String[] spinnerTitles;
         int[] spinnerImages;
-
+ // initialize drop down menu
         spinnerTitles = new String[]{"Food", "Grocery", "Travel", "Electronics", "Others"};
         spinnerImages = new int[]{R.drawable.ic_local_dining_24px
                 , R.drawable.ic_local_grocery_store_24px
@@ -79,6 +80,7 @@ public class AddWaranteeForm extends AppCompatActivity {
                 , R.drawable.ic_emoji_objects_24px};
         CustomFormAdapter mCustomAdapter = new CustomFormAdapter(this, spinnerTitles, spinnerImages);
         dropdown.setAdapter(mCustomAdapter);
+        // when clicking dropdown change categories
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView adapterView, View view, int i, long l) {
@@ -95,6 +97,7 @@ public class AddWaranteeForm extends AppCompatActivity {
         });
         //Next Page Button
         next = findViewById(R.id.nextPageButton);
+        // onclick for next button
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +109,7 @@ public class AddWaranteeForm extends AppCompatActivity {
 
         //Date Picker Code
         myDate = findViewById(R.id.editText3);
+        // on click for datepicker
         myDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,11 +135,15 @@ public class AddWaranteeForm extends AppCompatActivity {
 
     }
 
+    // user interaction event for datepicker
     @Override
     public void onUserInteraction() {
         super.onUserInteraction();
         isUserInteracting = true;
     }
+
+    // on next page
+    // it loads data into extras and starts next page activity
     //----------------------------- OpenAddWarantee Function -----------------------
     public void openAddWaranteeForm2(){
         Intent intent = new Intent(this, AddWaranteeForm2.class);

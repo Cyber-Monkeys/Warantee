@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+
+// drop down menu adapter
 public class CustomFormAdapter extends ArrayAdapter {
     String[] spinnerTitles;
     int[] spinnerImages;
