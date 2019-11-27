@@ -61,8 +61,8 @@ public class NotificationScheduler
         Intent intent1 = new Intent(context, cls);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, setcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        //am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),500 * 3, pendingIntent);
+        //am.setInexactRepeating(AlarmManager.RTC_WAKEUP, setcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),500 * 3, pendingIntent);
     }
 
     public static void cancelReminder(Context context,Class<?> cls)
@@ -101,7 +101,9 @@ public class NotificationScheduler
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "22")
                 .setSmallIcon(R.drawable.ic_local_dining_24px)
                 .setContentTitle(title)
+                .setPriority(Notification.PRIORITY_HIGH)
                 .setFullScreenIntent(pendingIntent, true)
+                .setVibrate(new long[0])
                 .setAutoCancel(true);
 
         CharSequence name = "note";

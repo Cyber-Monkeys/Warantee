@@ -38,7 +38,7 @@ public class AddWaranteeForm extends AppCompatActivity {
     private String email = "humaidk@gmail.com";
     private String date = "29/10/2019";
     private int WarantyPeriod = 30;
-    private int category = 2;
+    private int category = 0;
     private String amount= "50.5";
 
     //Variables for capturing and Viewing the Image
@@ -53,6 +53,7 @@ public class AddWaranteeForm extends AppCompatActivity {
     EditText emailEditText;
     EditText warantyPeriodEditText;
     EditText amountEditText;
+    EditText locationEditText;
     Calendar myCalendar = Calendar.getInstance();
     DatePickerDialog dpd ;
     private boolean isUserInteracting = false;
@@ -70,12 +71,14 @@ public class AddWaranteeForm extends AppCompatActivity {
         emailEditText = (EditText) findViewById(R.id.warantyEmail);
         warantyPeriodEditText = (EditText) findViewById(R.id.warantyPeriod);
         amountEditText = (EditText) findViewById(R.id.warantyAmount);
+        locationEditText = (EditText) findViewById(R.id.warantyLocation);
         myCalendar = Calendar.getInstance();
         nameEditText.setText("Humaid");
         phoneEditText.setText("34242");
         emailEditText.setText("humaidk2@gmail.com");
         warantyPeriodEditText.setText("50");
         amountEditText.setText("244");
+        locationEditText.setText("UOWD Dubai");
         String[] spinnerTitles;
         int[] spinnerImages;
 
@@ -117,7 +120,7 @@ public class AddWaranteeForm extends AppCompatActivity {
         myDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                myCalendar = Calendar.getInstance();
                 int day = myCalendar.get(Calendar.DAY_OF_MONTH);
                 int month = myCalendar.get(Calendar.MONTH);
                 int year = myCalendar.get(Calendar.YEAR);
@@ -130,32 +133,11 @@ public class AddWaranteeForm extends AppCompatActivity {
                         date = dayOfMonth + "/" + (month+1) + "/" + year;
                     }
                 }, day, month, year);
-                    dpd.show();
+                dpd.getDatePicker().setMaxDate(System.currentTimeMillis());
+                dpd.getDatePicker().updateDate(year, month, year);
+                dpd.show();
             }
         });
-
-
-//        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-//
-//            @Override
-//            public void onDateSet(DatePicker view, int year, int monthOfYear,
-//                                  int dayOfMonth) {
-//
-//                myCalendar.set(Calendar.YEAR, year);
-//                myCalendar.set(Calendar.MONTH, monthOfYear);
-//                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//                updateDate();
-//            }
-//        };
-
-        Button submitButton;
-
-        EditText editText1;
-        EditText editText2;
-        EditText editText4;
-        EditText editText5;
-        EditText editText6;
-        EditText editText7;
 
 
     }
@@ -175,17 +157,9 @@ public class AddWaranteeForm extends AppCompatActivity {
         intent.putExtra("period", warantyPeriodEditText.getText() + "");
         intent.putExtra("category", category);
         intent.putExtra("amount", amountEditText.getText() + "");
+        intent.putExtra("location", locationEditText.getText() + "");
         startActivity(intent);
     }
     //----------------------------- End of OpenAddWarantee -------------------------
 
-
-    //----------------------------- DatePicker Function -----------------------
-//    private void updateDate() {
-//        String myFormat = "DD/mm/yy"; //In which you need put here
-//        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
-//
-//        myDate.setText(sdf.format(myCalendar.getTime()));
-//    }
-    //----------------------------- End Of DatePicker --------------------------
 }

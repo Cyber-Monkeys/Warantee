@@ -11,6 +11,7 @@ public class Waranty {
     String sellerName;
     String sellerPhone;
     String sellerEmail;
+    String location;
 
 
 
@@ -26,8 +27,9 @@ public class Waranty {
         this.sellerPhone = "xxxx";
         this.sellerEmail = "xx@xx.com";
         this.imageLocation = "";
+        this.location = "xxxxxxx";
     }
-    public Waranty(String uid, String id, String date, float amount, String category, int warantyPeriod, String sellerName, String sellerPhone, String sellerEmail) {
+    public Waranty(String uid, String id, String date, float amount, String category, int warantyPeriod, String sellerName, String sellerPhone, String sellerEmail, String location) {
         this.uid = uid;
         this.id = id;
         this.date = date;
@@ -38,6 +40,7 @@ public class Waranty {
         this.sellerPhone = sellerPhone;
         this.sellerEmail = sellerEmail;
         this.imageLocation = "";
+        this.location = location;
     }
 
 
@@ -114,4 +117,9 @@ public class Waranty {
     public String getImageLocation() { return imageLocation; }
 
     public void setImageLocation(String imageLocation) { this.imageLocation = imageLocation; }
+
+    public String getLocation() { return location; }
+
+    public void setLocation(String location) { this.location = location; }
+
 }

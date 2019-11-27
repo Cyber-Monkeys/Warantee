@@ -107,14 +107,14 @@ public class waranteeList extends AppCompatActivity {
     private ArrayList<Waranty> warantyList;
     private int lengthOfWarantees = 0;
     private boolean isUserInteracting = false;
-    private int selectedCategory = 0;
+    private int selectedCategory = 5;
 
     protected Handler handler;
     SQLiteDatabase mydatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        NotificationScheduler.setReminder(waranteeList.this, AlarmReceiver.class, 4, 20);
+        NotificationScheduler.setReminder(waranteeList.this, AlarmReceiver.class, 9, 2);
         context = this.getApplicationContext();
         setContentView(R.layout.activity_warantee_list);
         listView = (ListView) findViewById(R.id.warantees);
@@ -126,7 +126,7 @@ public class waranteeList extends AppCompatActivity {
             //perform your database operations here ...
             // delete any existing table
             // create a new table for restaurants
-            mydatabase.execSQL("CREATE TABLE IF NOT EXISTS Waranty(id INTEGER PRIMARY KEY,uid VARCHAR, date VARCHAR, amount FLOAT, category INTEGER, warantyPeriod INTEGER, sellerName VARCHAR, sellerPhone VARCHAR, sellerEmail VARCHAR );");
+            mydatabase.execSQL("CREATE TABLE IF NOT EXISTS Waranty(id INTEGER PRIMARY KEY,uid VARCHAR, date VARCHAR, amount FLOAT, category INTEGER, warantyPeriod INTEGER, sellerName VARCHAR, sellerPhone VARCHAR, sellerEmail VARCHAR, location VARCHAR );");
             mydatabase.setTransactionSuccessful(); //commit your changes
         }
         catch (Exception e) {
@@ -152,7 +152,7 @@ public class waranteeList extends AppCompatActivity {
         String[] spinnerTitles;
         int[] spinnerImages;
 
-        spinnerTitles = new String[]{"Food", "Grocery", "Travel", "Electronics", "Others"};
+        spinnerTitles = new String[]{"Food", "Grocery", "Travel", "Electronics", "Others", "All"};
         spinnerImages = new int[]{R.drawable.ic_local_dining_24px
                 , R.drawable.ic_local_grocery_store_24px
                 , R.drawable.ic_directions_car_24px
@@ -160,16 +160,26 @@ public class waranteeList extends AppCompatActivity {
                 , R.drawable.ic_emoji_objects_24px};
         CustomFormAdapter mCustomAdapter = new CustomFormAdapter(this, spinnerTitles, spinnerImages);
         dropdown.setAdapter(mCustomAdapter);
+        dropdown.setSelection(selectedCategory);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView adapterView, View view, int i, long l) {
                 if (isUserInteracting) {
                     Toast.makeText(context, spinnerTitles[i], Toast.LENGTH_SHORT).show();
                     selectedCategory = i;
-                    //load from database where category = blah blah
-                    Cursor c = mydatabase.query("Waranty", null, "category=?", new String[]{selectedCategory + ""}, null, null, null);
+                    Cursor c = null;
+                    if(selectedCategory != 5) {
+
+                        //load from database where category = blah blah
+                        c = mydatabase.query("Waranty", null, "category=?", new String[]{selectedCategory + ""}, null, null, null);
+
+                    } else {
+                        //load from database where category = blah blah
+                        c = mydatabase.query("Waranty", null, null, null, null, null, null);
+
+                    }
                     warantyList.clear();
-                    while(c.moveToNext()) {
+                    while (c.moveToNext()) {
                         String uid = c.getString(c.getColumnIndex("uid"));
                         String id = c.getString(c.getColumnIndex("id"));
                         String date = c.getString(c.getColumnIndex("date"));
@@ -179,7 +189,8 @@ public class waranteeList extends AppCompatActivity {
                         String sellerName = c.getString(c.getColumnIndex("sellerName"));
                         String sellerPhone = c.getString(c.getColumnIndex("sellerPhone"));
                         String sellerEmail = c.getString(c.getColumnIndex("sellerEmail"));
-                        Waranty W = new Waranty(uid, id, date, amount, category, warantyPeriod, sellerName, sellerPhone, sellerEmail);
+                        String location = c.getString(c.getColumnIndex("location"));
+                        Waranty W = new Waranty(uid, id, date, amount, category, warantyPeriod, sellerName, sellerPhone, sellerEmail, location);
                         W.setImageLocation(getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath() + id + ".jpg");
                         warantyList.add(W);
                     }
@@ -378,7 +389,8 @@ public class waranteeList extends AppCompatActivity {
                     String sellerName = jsonObject.getString("sellerName");
                     String sellerPhone = jsonObject.getString("sellerPhone");
                     String sellerEmail = jsonObject.getString("sellerEmail");
-                    warantyList.add(new Waranty(uid, warantyId, date, amount, category, warantyPeriod, sellerName, sellerPhone, sellerEmail));
+                    String location = jsonObject.getString("location");
+                    warantyList.add(new Waranty(uid, warantyId, date, amount, category, warantyPeriod, sellerName, sellerPhone, sellerEmail, location));
                     mydatabase.beginTransaction();
                     try {
                         // insert downloaded data into database
@@ -392,6 +404,7 @@ public class waranteeList extends AppCompatActivity {
                         values.put("sellerName", sellerName);
                         values.put("sellerPhone", sellerPhone);
                         values.put("sellerEmail", sellerEmail);
+                        values.put("location", location);
                         mydatabase.insert("Waranty" , "" , values);
                         mydatabase.setTransactionSuccessful(); //commit your changes
 

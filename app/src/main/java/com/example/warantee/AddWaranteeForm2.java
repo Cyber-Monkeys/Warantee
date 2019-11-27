@@ -51,6 +51,7 @@ public class AddWaranteeForm2 extends AppCompatActivity {
     private String WarantyPeriod;
     private int category;
     private String amount;
+    private String location;
     private String currentPhotoPath, currentVideoPath;
     Context context;
     @Override
@@ -64,6 +65,7 @@ public class AddWaranteeForm2 extends AppCompatActivity {
         WarantyPeriod = intent.getStringExtra("period");
         category = intent.getIntExtra("category", 0);
         amount = intent.getStringExtra("amount");
+        location = intent.getStringExtra("location");
         context = this.getApplicationContext();
 
         intent.putExtra("category", category);
@@ -174,7 +176,7 @@ public class AddWaranteeForm2 extends AppCompatActivity {
                             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
                             if (networkInfo != null && networkInfo.isConnected()) {
                                 Log.d("res3", "start upload");
-                                new InsertWarantyTask(context).execute(stringUrl, idToken, date, amount + "", category + "", WarantyPeriod + "", name, phone, email, currentPhotoPath, currentVideoPath);
+                                new InsertWarantyTask(context).execute(stringUrl, idToken, date, amount + "", category + "", WarantyPeriod + "", name, phone, email, location, currentPhotoPath, currentVideoPath);
 
                             } else {
                                 Log.d("result2", "error");
