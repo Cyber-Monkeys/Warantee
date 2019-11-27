@@ -22,7 +22,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AddWaranteeForm3"></activity>
         <activity android:name=".WarrantyInfo" />
         <receiver android:name=".AlarmReceiver"
             android:enabled="false">
