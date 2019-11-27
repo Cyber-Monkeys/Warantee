@@ -83,13 +83,17 @@ public class NotificationScheduler
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static void showNotification(Context context, Class<?> cls, String title, String content)
+    public static void showNotification(Context context, Class<?> cls, String title, String content, int id)
     {
+
         Log.d("res1", "show notification");
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        Intent notificationIntent = new Intent(context, cls);
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Intent notificationIntent = new Intent(context, WarrantyInfo.class);
+        notificationIntent.putExtra("id", id);
+        context.startActivity(notificationIntent);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addParentStack(cls);

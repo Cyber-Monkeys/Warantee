@@ -59,6 +59,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         Cursor c = mydatabase.query("Waranty", new String[]{"warantyPeriod", "id"}, null, null, null, null, null);
         boolean startNotification = false;
+        int id = 0;
         while(c.moveToNext()) {
             int warantyPeriod = Integer.parseInt(c.getString(c.getColumnIndex("warantyPeriod")));
             Log.d(TAG, warantyPeriod + "");
@@ -69,10 +70,11 @@ public class AlarmReceiver extends BroadcastReceiver {
             ContentValues values = new ContentValues();
             values.put("warantyPeriod" , warantyPeriod + "");
             mydatabase.update("Waranty" , values ,"id=?" , new String[ ] {c.getString(c.getColumnIndex("id"))} );
+            id = c.getInt(c.getColumnIndex("id"));
         }
         if(startNotification) {
             NotificationScheduler.showNotification(context, waranteeList.class,
-                    "One of your warnatees is about to expire", "Please hurry");
+                    "Waranty id " + id + " is about to expire", "Please hurry", id);
         }
         //Trigger the notification
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();

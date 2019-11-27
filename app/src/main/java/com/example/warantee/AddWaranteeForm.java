@@ -17,7 +17,7 @@ import java.util.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
+// first form page
 public class AddWaranteeForm extends AppCompatActivity {
 
     //Next Button
