@@ -58,7 +58,7 @@ public class WarrantyInfo extends AppCompatActivity {
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
         Cursor c = mydatabase.query("Waranty", null, "id=?", new String[]{id}, null, null, null);
-        while(c.moveToNext()) {
+        if(c.moveToNext()) {
             date.setText(c.getString(c.getColumnIndex("date")));
             amount.setText(c.getString(c.getColumnIndex("amount")));
             warantyPeriod.setText(c.getString(c.getColumnIndex("warantyPeriod")));
@@ -89,42 +89,43 @@ public class WarrantyInfo extends AppCompatActivity {
             sellerEmail.setText(c.getString(c.getColumnIndex("sellerEmail")));
             Bitmap bm = BitmapFactory.decodeFile(getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath() + id + ".jpg");
             imageView.setImageBitmap(bm);
+
+            handler = new Handler(){
+                @Override
+                public void handleMessage(Message msg) {
+                    Log.d("res3", "complete video download");
+                    videoView.setVideoPath(getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath() + id + ".mp4");
+                    videoView.setMediaController(media);
+                    media.setAnchorView(videoView);
+                    videoView.start();
+                }
+            };
+
+            FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+            mUser.getIdToken(true)
+                    .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                        public void onComplete(@NonNull Task<GetTokenResult> task) {
+                            if (task.isSuccessful()) {
+                                String idToken = task.getResult().getToken();
+                                ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                                NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                                if (networkInfo != null && networkInfo.isConnected()) {
+                                    Log.d("res3", "start upload");
+                                    Thread obj = new Thread(new GetWaranteeVideoTask("https://www.vrpacman.com/s3proxy?fileKey=" + c.getString(c.getColumnIndex("uid")) + id + ".mp4", id, getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath(),idToken, handler));
+                                    obj.start();
+                                } else {
+                                    Log.d("result2", "error");
+                                }
+                                // ...
+                            } else {
+                                // Handle error -> task.getException();
+                                Log.d("res3", "no token verified");
+                            }
+                        }
+                    });
         }
 
 
-        handler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                Log.d("res3", "complete video download");
-                videoView.setVideoPath(getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath() + id + ".mp4");
-                videoView.setMediaController(media);
-                media.setAnchorView(videoView);
-                videoView.start();
-            }
-        };
-
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-        mUser.getIdToken(true)
-                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
-                    public void onComplete(@NonNull Task<GetTokenResult> task) {
-                        if (task.isSuccessful()) {
-                            String idToken = task.getResult().getToken();
-                            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-                            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-                            if (networkInfo != null && networkInfo.isConnected()) {
-                                Log.d("res3", "start upload");
-                                Thread obj = new Thread(new GetWaranteeVideoTask("https://www.vrpacman.com/s3proxy?fileKey=" + c.getString(c.getColumnIndex("uid")) + id + ".mp4", id, getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath(),idToken, handler));
-                                obj.start();
-                            } else {
-                                Log.d("result2", "error");
-                            }
-                            // ...
-                        } else {
-                            // Handle error -> task.getException();
-                            Log.d("res3", "no token verified");
-                        }
-                    }
-                });
         //download Video
 
     }
