@@ -19,29 +19,32 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUp extends AppCompatActivity {
 
+    //variables
     private EditText emailText, passwordText, confirmPasswordText;
     private Button btnSignUp;
     FirebaseAuth mFirebaseAuth;
     ProgressDialog progressDialog;
 
+    //onCreate function
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
-        progressDialog = new ProgressDialog(this);
 
         //Set background transparency to 80%
         View backgroundimage = findViewById(R.id.background);
         Drawable background = backgroundimage.getBackground();
         background.setAlpha(80);
 
+        //initializing views
+        progressDialog = new ProgressDialog(this);
         mFirebaseAuth = FirebaseAuth.getInstance();
         emailText = (EditText)findViewById(R.id.email);
         passwordText = (EditText) findViewById(R.id.password);
         confirmPasswordText = (EditText) findViewById(R.id.confirmPassword);
         btnSignUp = (Button) findViewById(R.id.btnLogIn);
 
+        //sign up onclick
         btnSignUp.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
