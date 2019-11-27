@@ -1,8 +1,5 @@
 package com.example.warantee;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,11 +8,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,8 +26,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 
-public class WarrantyInfo extends AppCompatActivity {
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
+public class WarrantyInfo extends AppCompatActivity {
+    String location;
     TextView sellerName, sellerPhone, sellerEmail, amount, date, warantyPeriod, category;
     ImageView imageView;
     VideoView videoView;
@@ -62,6 +62,7 @@ public class WarrantyInfo extends AppCompatActivity {
         date.setText(c.getString(c.getColumnIndex("date")));
         amount.setText(c.getString(c.getColumnIndex("amount")));
         warantyPeriod.setText(c.getString(c.getColumnIndex("warantyPeriod")));
+        location = c.getString(c.getColumnIndex("location"));
 
         String categoryWarranty=" ";
         switch (c.getString(c.getColumnIndex("category"))){
@@ -125,7 +126,12 @@ public class WarrantyInfo extends AppCompatActivity {
         //download Video
 
     }
-
+    public void showLocationPressed(View view) {
+        Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + location);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
+    }
     public void goBack(View view){
         Intent i = new Intent(this, waranteeList.class);
         startActivity(i);

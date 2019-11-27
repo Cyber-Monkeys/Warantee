@@ -1,9 +1,5 @@
 package com.example.warantee;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -42,6 +39,10 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.Arrays;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 public class Login extends AppCompatActivity {
 
     //variables
@@ -66,7 +67,7 @@ public class Login extends AppCompatActivity {
 
         //Initializing views
         progressDialog = new ProgressDialog(this);
-        forgotPassword = (TextView) findViewById(R.id.forgotPassword);
+        forgotPassword = findViewById(R.id.forgotPassword);
         //Set background transparency to 80%
         View backgroundimage = findViewById(R.id.background);
         Drawable background = backgroundimage.getBackground();
@@ -78,13 +79,13 @@ public class Login extends AppCompatActivity {
         TextView textView = (TextView) googleSignInButton.getChildAt(0);
         textView.setText("Sign in with Google");
 
-        fbLogInButton = (LoginButton) findViewById(R.id.fb_login_button);
+        fbLogInButton = findViewById(R.id.fb_login_button);
         callbackManager = CallbackManager.Factory.create();
 
         mFirebaseAuth = FirebaseAuth.getInstance();
-        emailText = (EditText) findViewById(R.id.email);
-        passwordText = (EditText) findViewById(R.id.password);
-        btnLogIn = (Button) findViewById(R.id.btnLogIn);
+        emailText = findViewById(R.id.email);
+        passwordText = findViewById(R.id.password);
+        btnLogIn = findViewById(R.id.btnLogIn);
 
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

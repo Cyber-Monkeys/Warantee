@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,7 +12,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -31,11 +29,10 @@ public class InsertWarantyTask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
         try {
-            Log.d("res1", params[9]);
-            this.currentPhotoPath = params[9];
-            this.currentVideoPath = params[10];
+            this.currentPhotoPath = params[10];
+            this.currentVideoPath = params[11];
             InsertWarantyTask.idToken = params[1];
-            return  downloadUrl(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], params[8]);
+            return  downloadUrl(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], params[8], params[9]);
         } catch (IOException e) {
             return "Unable to retrieve web page. URL may be invalid.";
         }
@@ -46,7 +43,7 @@ public class InsertWarantyTask extends AsyncTask<String, Void, String> {
         new UploadPhotoTask(context).execute(InsertWarantyTask.idToken,result, this.currentPhotoPath, this.currentVideoPath);
     }
 
-    private String downloadUrl(String myurl, String idToken, String date, String amount, String category, String warantyPeriod, String sellerName, String sellerPhone, String sellerEmail ) throws IOException {
+    private String downloadUrl(String myurl, String idToken, String date, String amount, String category, String warantyPeriod, String sellerName, String sellerPhone, String sellerEmail, String location) throws IOException {
         InputStream is = null;
         Log.d("res1", amount);
         float parseAmount = Float.parseFloat(amount);
@@ -77,6 +74,7 @@ public class InsertWarantyTask extends AsyncTask<String, Void, String> {
             jsonParam.put("sellerName", sellerName);
             jsonParam.put("sellerPhone", sellerPhone);
             jsonParam.put("sellerEmail", sellerEmail);
+            jsonParam.put("location", location);
             os = new DataOutputStream(conn.getOutputStream());
             //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
             os.writeBytes(jsonParam.toString());
