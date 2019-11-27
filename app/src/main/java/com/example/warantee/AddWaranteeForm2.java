@@ -162,6 +162,7 @@ public class AddWaranteeForm2 extends AppCompatActivity {
         }
     }
     public void submitWaranty(View V) {
+
         String stringUrl = "https://www.vrpacman.com/waranty";
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         mUser.getIdToken(true)
@@ -185,6 +186,7 @@ public class AddWaranteeForm2 extends AppCompatActivity {
                         }
                     }
                 });
+
     }
     private File createFile(String fileType, String ext) throws IOException {
         // Create an Video file name

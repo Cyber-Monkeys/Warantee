@@ -35,5 +35,17 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
     implementation 'com.google.firebase:firebase-auth:19.1.0'//facebook api
+
+
+    implementation 'com.google.android.libraries.places:places:1.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation  'com.google.android.libraries.places:places:1.0.0'
+    implementation 'com.google.android.gms:play-services-maps:10.2.0'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+//    implementation 'com.google.android.gms:play-services-places:16.0.0'
+//    implementation 'com.google.android.gms:play-services-ads:18.3.0'//Maps api
+//    implementation'com.google'
+
+    implementation 'com.android.support:appcompat-v7:28.0.0'
 }
 apply plugin: 'com.google.gms.google-services'
