@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient"
     tools:context=".WarrantyInfo">
 
     <Button
@@ -12,19 +13,48 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
-        android:drawableStart="@drawable/ic_back_arrow"
+        android:backgroundTint="@color/buttonHint"
         android:drawableLeft="@drawable/ic_back_arrow"
+        android:drawableStart="@drawable/ic_back_arrow"
         android:onClick="goBack"
+        android:textColor="@color/buttonTextColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView8"
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="20dp"
+        android:background="@color/buttonHint"
+        android:onClick="showLocationPressed"
+        android:text="Show Location"
+        android:textColor="@color/buttonTextColor"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="156dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="28dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView21"
+        app:srcCompat="@drawable/warantee" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="136dp"
         android:layout_marginStart="136dp"
         android:layout_marginTop="35dp"
-        android:layout_marginEnd="136dp"
         android:fontFamily="@font/abril_fatface"
         android:text="Warranty"
         android:textSize="30sp"
@@ -112,29 +142,6 @@
         android:textSize="17sp"
         app:layout_constraintStart_toStartOf="@+id/textView20"
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="156dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="28dp"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21"
-        app:srcCompat="@drawable/warantee" />
-
-    <VideoView
-        android:id="@+id/videoView"
-        android:layout_width="294dp"
-        android:layout_height="169dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/seller_name"
@@ -227,18 +234,14 @@
         app:layout_constraintStart_toEndOf="@+id/textView21"
         app:layout_constraintTop_toBottomOf="@+id/warranty_period" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="20dp"
-        android:onClick="showLocationPressed"
-        android:text="Show Location"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="294dp"
+        android:layout_height="169dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,24 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient"
     tools:context=".AddWaranteeForm2">
-
-    <VideoView
-        android:id="@+id/warantyVideo"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="82dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
         android:layout_marginTop="5dp"
+        android:backgroundTint="@color/buttonHint"
         android:onClick="getVideoFromCamera"
         android:text="@string/playVideo"
+        android:textColor="@color/buttonTextColor"
         app:layout_constraintBottom_toTopOf="@+id/captureImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -29,23 +23,15 @@
         app:layout_constraintTop_toBottomOf="@+id/warantyVideo"
         app:layout_constraintVertical_bias="0.412" />
 
-    <ImageView
-        android:id="@+id/warrantyImage"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="110dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/warantyVideo"
-        app:srcCompat="@android:drawable/screen_background_dark_transparent" />
-
     <Button
         android:id="@+id/captureImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:backgroundTint="@color/buttonHint"
         android:onClick="getPhotoFromCamera"
         android:text="@string/captureImage"
+        android:textColor="@color/buttonTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/warrantyImage" />
@@ -57,10 +43,31 @@
         android:layout_marginBottom="74dp"
         android:layout_marginEnd="106dp"
         android:layout_marginStart="105dp"
+        android:backgroundTint="@color/buttonHint"
         android:onClick="submitWaranty"
         android:text="Submit"
+        android:textColor="@color/buttonTextColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/warrantyImage"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="110dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/warantyVideo"
+        app:srcCompat="@android:drawable/screen_background_dark_transparent" />
+
+    <VideoView
+        android:id="@+id/warantyVideo"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="82dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,9 +40,7 @@ public class CustomFormAdapter extends ArrayAdapter {
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
         }
-        if(position != 5) {
-            mViewHolder.mFlag.setImageResource(spinnerImages[position]);
-        }
+        mViewHolder.mFlag.setImageResource(spinnerImages[position]);
         mViewHolder.mName.setText(spinnerTitles[position]);
 
         return convertView;
